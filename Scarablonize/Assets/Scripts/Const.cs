@@ -1,1 +1,1 @@
-﻿public class Const{	public const int MapSize = 10;}public class EnumType{	public enum UIType	{		Menu,		Levels,		InGame	}}public class TagConst{	public const string SinglePlay = "1P";	public const string TwoPlayers = "2P";	public const string Staff = "Staff";}
+﻿public class Const{	public const int MapSize = 10;}public class EnumType{	public enum UIType	{		Menu,		Levels,		InGame,		Staff	}}public class TagConst{	public const string SinglePlay = "1P";	public const string TwoPlayers = "2P";	public const string Staff = "Staff";}
