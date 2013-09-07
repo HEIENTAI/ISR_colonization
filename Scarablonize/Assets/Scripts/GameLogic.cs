@@ -137,7 +137,7 @@ public class GameLogic
 	/// <param name="realEnd">
 	/// 實際的移動終點
 	/// </param>
-	public MoveType Move(Creature creature, IVector2 end, out IVector2 realEnd)
+	public MoveType Move(Creature creature, IVector2 end, IVector2 startPos, out IVector2 realEnd)
 	{
 		realEnd = new IVector2(0,0);
 		return MoveType.Move;

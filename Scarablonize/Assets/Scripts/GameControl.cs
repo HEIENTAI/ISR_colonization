@@ -21,17 +21,19 @@ public enum PlayMode
     TwoPlayer
 }
 
-//遊戲邏輯主控台
+//遊戲邏輯主控台, 各系統溝通銜接口
 public class GameControl{
     public static GameControl _instance;
+    private GameMain _main;
     private PlayStatus _currentPlayStatus;
     private PlayMode _currentPlayMode;
     private ushort chapterID = 0; // 0 = no chapter
     // private GUI Manager 預定地, for Sadwx
 
-    public GameControl()
+    private GameControl(GameMain main)
     {
         // GUIManager.ShowGameTitle
+        _main = main;
     }
 
     public static GameControl Instance
@@ -39,7 +41,10 @@ public class GameControl{
         get
         {
             if (_instance == null)
-                _instance = new GameControl();
+            {
+                GameMain main = GameObject.FindObjectOfType(typeof(GameMain)) as GameMain;
+                _instance = new GameControl(main);
+            }
 
             return _instance;
         }
@@ -130,6 +135,11 @@ public class GameControl{
                 // todo
                 break;
         }
+    }
+
+    public void StartCoroutine(IEnumerator routine)
+    {
+        _main.StartCoroutine(routine);
     }
 
     // message for debug use.

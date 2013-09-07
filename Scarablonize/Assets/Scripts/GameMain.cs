@@ -7,7 +7,7 @@ public class GameMain : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        _control = new GameControl();
+        _control = GameControl.Instance;
 	}
 	
 	// Update is called once per frame
