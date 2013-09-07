@@ -4,7 +4,7 @@ using System.Collections;
 public class GameLifeUI : MonoBehaviour 
 {
 	UISprite _lifeBG;
-	float 
+//	float 
 
 	// Use this for initialization
 	void Start () {
