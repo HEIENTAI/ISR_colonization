@@ -7,10 +7,12 @@ public enum PlayStatus
     GameTitle,
     GameChooseChapter,
     GameChoosePlaymode,
+    MapGenerating, // Map is generating
+    RoundScarabTurn,
+    ScarabTurnAnimating, // 蟲族方動畫撥放中, 無法操作
     RoundHumanTurn,
     HumanTurnAnimating, // 人類方動畫撥放中, 無法操作
-    RoundScarabTurn,
-    ScarabTurnAnimating // 蟲族方動畫撥放中, 無法操作
+    BattleResult
 }
 
 public enum PlayMode
@@ -24,10 +26,12 @@ public class GameControl{
     public static GameControl _instance;
     private PlayStatus _currentPlayStatus;
     private PlayMode _currentPlayMode;
+    private ushort chapterID = 0; // 0 = no chapter
     // private GUI Manager 預定地, for Sadwx
 
     public GameControl()
     {
+        // GUIManager.ShowGameTitle
     }
 
     public static GameControl Instance
@@ -66,25 +70,39 @@ public class GameControl{
             return;
         }
 
-        _currentPlayStatus = PlayStatus.GameChooseChapter;
+        _currentPlayStatus = PlayStatus.GameChoosePlaymode;
 
         // NGUI show ui
     }
 
-    // 玩家從 title 畫面, 觸發遊戲開始
-    public void TriggerChooseChapter()
+    // 玩家從 mode 選擇觸發
+    public void TriggerChoosePlayMode(PlayMode mode)
     {
-        if (_currentPlayStatus != PlayStatus.GameTitle)
+        if (_currentPlayStatus != PlayStatus.GameChoosePlaymode)
         {
             DebugLog("Status error.");
             return;
         }
 
+        _currentPlayMode = mode;
         _currentPlayStatus = PlayStatus.GameChooseChapter;
 
         // NGUI show ui
     }
 
+    // 玩家從 關卡選擇 UI 畫面, 觸發遊戲開始
+    public void TriggerChooseChapter(ushort chapterID)
+    {
+        if (_currentPlayStatus != PlayStatus.GameChooseChapter)
+        {
+            DebugLog("Status error.");
+            return;
+        }
+
+        _currentPlayStatus = PlayStatus.RoundScarabTurn; //蟲族先攻
+
+        // NGUI show ui
+    }
 
     // UI 控制區 (NGUI)
 
@@ -93,7 +111,25 @@ public class GameControl{
     // update per-frame
     public void Update()
     {
+        switch(_currentPlayStatus)
+        {
+            case PlayStatus.GameChooseChapter:
+                //todo
+                break;
+            case PlayStatus.GameChoosePlaymode:
+                //todo
+                break;
 
+            case PlayStatus.GameTitle:
+                //todo
+                break;
+            case PlayStatus.MapGenerating:
+                //todo
+                break;
+            default:
+                // todo
+                break;
+        }
     }
 
     // message for debug use.
