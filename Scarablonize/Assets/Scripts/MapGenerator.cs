@@ -31,7 +31,13 @@ public class MapGenerator {
 		
 		GameControl.Instance.DebugLog("Loading complete...");
 	}
-	
+
+    //SH Add 20130908
+    public static BlockGraphicType GetBlockType(ushort typeID)
+    {
+        return (BlockGraphicType)typeID;
+    }
+
 	private static void generateAllBlocks(string fileName)
 	{
 		root = GameObject.Find("Blocks");
@@ -60,31 +66,32 @@ public class MapGenerator {
 	private static void generateBlock(string type, int x, int y)
 	{
 		GameObject newBlock = null;
-		switch(type)
+        BlockGraphicType graphicType = GetBlockType(Convert.ToUInt16(type));
+        switch (graphicType)
 		{
-			case "0": 
-			    newBlock = GameObject.Instantiate(Resources.Load("Prefabs/Sand")) as GameObject;
+            case BlockGraphicType.Sand: 
+			    newBlock = GameObject.Instantiate(Resources.Load(Const.DIR_Prefab + "Sand")) as GameObject;
 			break;
-			case "1": 
-			    newBlock = GameObject.Instantiate(Resources.Load("Prefabs/River_TL")) as GameObject;
+            case BlockGraphicType.River_TL: 
+			    newBlock = GameObject.Instantiate(Resources.Load(Const.DIR_Prefab + "River_TL")) as GameObject;
 			break;
-			case "2": 
-			    newBlock = GameObject.Instantiate(Resources.Load("Prefabs/River_TR")) as GameObject;
+            case BlockGraphicType.River_TR: 
+			    newBlock = GameObject.Instantiate(Resources.Load(Const.DIR_Prefab + "River_TR")) as GameObject;
 			break;
-			case "3": 
-			    newBlock = GameObject.Instantiate(Resources.Load("Prefabs/River_BL")) as GameObject;
+            case BlockGraphicType.River_BL: 
+			    newBlock = GameObject.Instantiate(Resources.Load(Const.DIR_Prefab + "River_BL")) as GameObject;
 			break;
-			case "4": 
-			    newBlock = GameObject.Instantiate(Resources.Load("Prefabs/River_BR")) as GameObject;
+            case BlockGraphicType.River_BR:  
+			    newBlock = GameObject.Instantiate(Resources.Load(Const.DIR_Prefab + "River_BR")) as GameObject;
 			break;
-			case "5": 
-			    newBlock = GameObject.Instantiate(Resources.Load("Prefabs/Hole")) as GameObject;
+            case BlockGraphicType.Hole:  
+			    newBlock = GameObject.Instantiate(Resources.Load(Const.DIR_Prefab + "Hole")) as GameObject;
 			break;
-			case "6": 
-			    newBlock = GameObject.Instantiate(Resources.Load("Prefabs/House")) as GameObject;
+            case BlockGraphicType.House:  
+			    newBlock = GameObject.Instantiate(Resources.Load(Const.DIR_Prefab + "House")) as GameObject;
 			break;
-			case "7": 
-			    newBlock = GameObject.Instantiate(Resources.Load("Prefabs/Pyramid")) as GameObject;
+            case BlockGraphicType.Pyramid:  
+			    newBlock = GameObject.Instantiate(Resources.Load(Const.DIR_Prefab + "Pyramid")) as GameObject;
 			break;
 		}
 		
@@ -96,4 +103,5 @@ public class MapGenerator {
 			newBlock.transform.parent = root.transform;
 		}
 	}
+
 }
