@@ -78,7 +78,7 @@ public class GameControl{
         _currentPlayStatus = PlayStatus.GameChoosePlaymode;
 
         // NGUI show ui
-    }
+		UIManager.Instance.Open(EnumType.UIType.Menu);    }
 
     // 玩家從 mode 選擇觸發
     public void TriggerChoosePlayMode(PlayMode mode)
@@ -93,7 +93,7 @@ public class GameControl{
         _currentPlayStatus = PlayStatus.GameChooseChapter;
 
         // NGUI show ui
-    }
+		UIManager.Instance.Open(EnumType.UIType.Levels);    }
 
     // 玩家從 關卡選擇 UI 畫面, 觸發遊戲開始
     public void TriggerChooseChapter(ushort chapterID)
@@ -107,7 +107,7 @@ public class GameControl{
         _currentPlayStatus = PlayStatus.RoundScarabTurn; //蟲族先攻
 
         // NGUI show ui
-    }
+		UIManager.Instance.Open(EnumType.UIType.InGame);    }
 
     // UI 控制區 (NGUI)
 
