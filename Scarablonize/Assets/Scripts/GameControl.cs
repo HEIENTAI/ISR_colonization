@@ -61,7 +61,8 @@ public class GameControl{
         _currentPlayStatus = PlayStatus.GameChoosePlaymode;
 
         // NGUI show ui
-		UIManager.Instance.Open(EnumType.UIType.Menu);    }
+		UIManager.Instance.Open(EnumType.UIType.Menu);
+    }
 
     // 玩家從 mode 選擇觸發
     public void TriggerChoosePlayMode(PlayMode mode)
@@ -76,7 +77,8 @@ public class GameControl{
         _currentPlayStatus = PlayStatus.GameChooseChapter;
 
         // NGUI show ui
-		UIManager.Instance.Open(EnumType.UIType.Levels);    }
+		UIManager.Instance.Open(EnumType.UIType.Levels);
+    }
 
     // 玩家從 關卡選擇 UI 畫面, 觸發遊戲開始
     public void TriggerChooseChapter(ushort chapterID)
@@ -92,7 +94,8 @@ public class GameControl{
 
         MapGenerator.Generate( _currentChapterID );
         // NGUI show ui
-		UIManager.Instance.Open(EnumType.UIType.InGame);    }
+		UIManager.Instance.Open(EnumType.UIType.InGame);
+    }
 
     //------------  Map 控制相關 -------------------
     // player click a tile in Map, Top Left is 0, 0
