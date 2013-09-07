@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 public enum Creature
 {
@@ -65,6 +66,11 @@ public class MapBlock
 		if (LivingObject == Creature.People && MapBlockType == BlockType.House) {return false;}
 		return true;
 	}
+	
+	public override string ToString ()
+	{
+		return string.Format ("[MapBlock: Pos={0}, LivingObject={1}, MapBlockType={2}]", Pos, LivingObject, MapBlockType);
+	}
 }	
 
 public class Map
@@ -99,7 +105,6 @@ public class Map
 		holePos = new Dictionary<IVector2, IVector2>();
 		peopleCanMovePos = new List<IVector2>();
 		scarabCanMovePos = new List<IVector2>();
-//		canMoveBlock = 0;
 		_peopleCount = 0;
 		_scarabCount = 0;
 	}
@@ -112,10 +117,48 @@ public class Map
 		scarabCanMovePos = null;
 	}
 	
+	public override string ToString ()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.AppendFormat("Map : allMapBlock\n");
+		int x = 0;
+		int y = 0;
+		foreach(List<MapBlock> colMapBlock in allMapBlock)
+		{
+			foreach(MapBlock oneMapBlock  in colMapBlock)
+			{
+				sb.AppendFormat("allMapBlock[{0}][{1}] = {2}\n", x, y, allMapBlock[x][y]);
+				++y;
+			}
+			++x;
+		}
+		sb.AppendFormat("holePos:\n");
+		foreach(IVector2 startHoldPos in holePos.Keys)
+		{
+			sb.AppendFormat("holePos[{0}] = {1}\n", startHoldPos, holePos[startHoldPos]);
+		}
+		sb.AppendFormat("peopleCanMovePos:\n");
+		int index = 0;
+		foreach(IVector2 peopleOneMovePos in peopleCanMovePos)
+		{
+			sb.AppendFormat("peopleCanMovePos[{0}] = {1}\n", index, peopleOneMovePos);
+			++index;
+		}
+		index = 0;
+		sb.AppendFormat("scarabCanMovePos:\n");
+		foreach(IVector2 scarabOneMovePos in scarabCanMovePos)
+		{
+			sb.AppendFormat("scarabCanMovePos[{0}] = {1}\n", index, scarabCanMovePos);
+			++index;
+		}
+		sb.AppendFormat("_peopleCount = {0} _scarabCount = {1}", _peopleCount,_scarabCount);
+		return sb.ToString();
+	}
+	
 	public void Initialize(List<List<MapBlock>> allMapData, Dictionary<IVector2, IVector2> holeMapData)
 	{
 		holePos = holeMapData;
-        allMapBlock = allMapData;
+		allMapBlock = allMapData;
 		
 		foreach(List<MapBlock> rowBlockData in allMapData)
 		{
@@ -127,7 +170,6 @@ public class Map
 				}
 			}
 		}
-		
 	}
 	
 	
@@ -323,23 +365,21 @@ public class GameLogic
 		new IVector2( 1, 0), // Right
 	};
 	
-	private int _peopleCount;
-	public int PeopleCount
-	{
-		get {return _peopleCount;} 
-	}
-	private int _scarabCount;
-	public int ScarabCount
-	{
-		get {return _scarabCount;}
-	}
+//	private int _peopleCount;
+//	public int PeopleCount
+//	{
+//		get {return _peopleCount;} 
+//	}
+//	private int _scarabCount;
+//	public int ScarabCount
+//	{
+//		get {return _scarabCount;}
+//	}
 	
 	private Map map;
 	
 	public GameLogic()
 	{
-		_peopleCount = 0;
-		_scarabCount = 0;
 		map = new Map();
 	}
 	
@@ -445,12 +485,12 @@ public class GameLogic
 	/// </returns>
 	public BattleResult DecideResult(Creature creature)
 	{
-		if (_peopleCount == 0 && _scarabCount > 0) {return BattleResult.ScarabWin;}
-		if (_scarabCount == 0 && _peopleCount > 0) {return BattleResult.PeopleWin;}
+		if (map.PeopleCount == 0 && map.ScarabCount > 0) {return BattleResult.ScarabWin;}
+		if (map.ScarabCount == 0 && map.PeopleCount > 0) {return BattleResult.PeopleWin;}
 		if (!map.HasAnyMove()) // 沒人可移動,比較單位數
 		{
-			if (_peopleCount > _scarabCount) {return BattleResult.PeopleWin;}
-			else if (_peopleCount < _scarabCount) {return BattleResult.ScarabWin;}
+			if (map.PeopleCount > map.ScarabCount) {return BattleResult.PeopleWin;}
+			else if (map.PeopleCount < map.ScarabCount) {return BattleResult.ScarabWin;}
 			else {return BattleResult.Draw;}
 		}
 		else // 有人可移動
