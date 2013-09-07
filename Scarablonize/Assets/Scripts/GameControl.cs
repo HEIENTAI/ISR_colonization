@@ -5,7 +5,7 @@ using System.Collections;
 public class GameControl{
     private static GameControl _instance;
     private GameMain _main;
-    private MapGenerator _mapGenerator;
+    private Map _mapData;
     private PlayStatus _currentPlayStatus;
 	private PlayStatus _lastPlayStatus;
     private PlayMode _currentPlayMode;
@@ -21,7 +21,7 @@ public class GameControl{
     {
         // GUIManager.ShowGameTitle
         _main = main;
-        _mapGenerator = new MapGenerator();
+        _mapData = new Map();
 
         TriggerGameEnter();
     }
@@ -97,11 +97,27 @@ public class GameControl{
         }
 
         _currentChapterID = chapterID;
-        _currentPlayStatus = PlayStatus.RoundScarabTurn; //蟲族先攻
+        _currentPlayStatus = PlayStatus.MapGenerating;
 
         MapGenerator.Generate( _currentChapterID );
+
         // NGUI show ui
 		UIManager.Instance.Open(EnumType.UIType.InGame);
+    }
+
+    // Map 產生完畢後呼叫, PS: 因為 load level 是 async, 所以 is done 由 map generator 判定
+    public void TriggerMapGenerateDone()
+    {
+        if (_currentPlayStatus != PlayStatus.MapGenerating)
+        {
+            DebugLog("Status error. Should be MapGenerating");
+            return;
+        }
+
+        DebugLog("蟲族先攻");
+
+        _mapData.Initialize(MapGenerator.GeneratedData, MapGenerator.GeneratedHoleData);
+        _currentPlayStatus = PlayStatus.RoundScarabTurn; //蟲族先攻
     }
 
     //------------  Map 控制相關 -------------------
