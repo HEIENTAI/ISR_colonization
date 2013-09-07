@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 
-public class MapGenerator : MonoBehaviour {
+public class MapGenerator {
 	public static int NumOfTiles_X = 10;
 	public static int NumOfTiles_Y = 10;
 	public static int Tile_Width = 64;
@@ -11,24 +11,25 @@ public class MapGenerator : MonoBehaviour {
 	private static  string[] lineDelimiter = new string[] { "\r\n", "\n" };
 	private static  string[] tokenDelimiter = new string[] { "," };
 	
-	public static void Generate(string fileName)
+	public static void Generate(ushort LevelID)
 	{
-        GameControl.Instance.StartCoroutine(loadLevel(fileName));
+        string fileName = Const.FILENAME_LEVEL_PREFIX + LevelID.ToString();
+        GameControl.Instance.StartCoroutine(LoadLevel(fileName));
 	}
-	
-	private static IEnumerator loadLevel(string fileName)
+
+    private static IEnumerator LoadLevel(string fileName)
 	{
-		AsyncOperation async = Application.LoadLevelAsync ("xLevel");
+		AsyncOperation async = Application.LoadLevelAsync(Const.MAP_NAME_EMPTY);
 		yield return async;
 		
 		generateAllBlocks(fileName);
 		
-		Debug.Log ("Loading complete");
+		GameControl.Instance.DebugLog("Loading complete...");
 	}
 	
 	private static void generateAllBlocks(string fileName)
 	{
-		TextAsset levelFile = Resources.Load("levels/"+fileName) as TextAsset;
+		TextAsset levelFile = Resources.Load(Const.DIR_LEVEL + fileName) as TextAsset;
 		
 		if(levelFile != null)
 		{

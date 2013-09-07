@@ -1,39 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//遊戲進行狀態
-public enum PlayStatus
-{
-    GameTitle,
-    GameChooseChapter,
-    GameChoosePlaymode,
-    MapGenerating, // Map is generating
-    RoundScarabTurn,
-    ScarabTurnAnimating, // 蟲族方動畫撥放中, 無法操作
-    RoundHumanTurn,
-    HumanTurnAnimating, // 人類方動畫撥放中, 無法操作
-    BattleResult
-}
-
-public enum PlayMode
-{
-    SinglePlay,
-    TwoPlayer
-}
-
 //遊戲邏輯主控台, 各系統溝通銜接口
 public class GameControl{
     public static GameControl _instance;
     private GameMain _main;
+    private MapGenerator _mapGenerator;
     private PlayStatus _currentPlayStatus;
     private PlayMode _currentPlayMode;
-    private ushort chapterID = 0; // 0 = no chapter
+    private ushort _currentChapterID = 0; // 0 = no chapter
+
     // private GUI Manager 預定地, for Sadwx
 
     private GameControl(GameMain main)
     {
         // GUIManager.ShowGameTitle
         _main = main;
+        _mapGenerator = new MapGenerator();
     }
 
     public static GameControl Instance
@@ -104,14 +87,30 @@ public class GameControl{
             return;
         }
 
+        _currentChapterID = chapterID;
         _currentPlayStatus = PlayStatus.RoundScarabTurn; //蟲族先攻
 
+        MapGenerator.Generate( _currentChapterID );
         // NGUI show ui
 		UIManager.Instance.Open(EnumType.UIType.InGame);    }
 
-    // UI 控制區 (NGUI)
+    //------------  Map 控制相關 -------------------
+    // player click a tile in Map, Top Left is 0, 0
+    public void MapTileClick(float x, float y)
+    {
+        switch(_currentPlayStatus)
+        {
+            case PlayStatus.RoundHumanTurn:
 
-    // Scene (tile, Orthella)
+                break;
+            case PlayStatus.RoundScarabTurn:
+
+                break;
+            default:
+                DebugLog("Click Tile valid. " + _currentPlayStatus.ToString());
+                break;
+        }
+    }
 
     // update per-frame
     public void Update()
