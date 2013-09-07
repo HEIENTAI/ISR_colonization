@@ -33,6 +33,14 @@ public enum BattleResult
 	Draw, // 平手
 }
 
+public enum ControlMessage
+{
+	OK, // 可以移動
+	WrongCreature, // 控制的生物種類錯誤
+    NoneCreature, // 要控制的位置沒有生物
+    PositionError, // 位置錯誤
+}
+
 public class MapBlock
 {
 	public IVector2 Pos {get;set;}
@@ -47,12 +55,19 @@ public class MapBlock
 		MapBlockType = BlockType.Sand;
 	}
 	
-	public bool CanMove(Creature creature)
+    /// <summary>
+    /// creature可否移動到此格
+    /// </summary>
+    /// <param name="creature">要移動的生物</param>
+    /// <returns>能否移動</returns>
+	public bool CanMoveTo(Creature creature)
 	{
 		// 是否有生物在上頭
 		if (LivingObject != Creature.None) {return false;}
 		// 地形影響
-		if (MapBlockType == BlockType.River) {return false;}
+		if (MapBlockType == BlockType.River || MapBlockType == BlockType.Pyramid) {return false;}
+        // 蟲不得進入房子
+		if (creature == Creature.Scarab && MapBlockType == BlockType.House) {return false;}
 		return true;
 	}
 	
@@ -96,7 +111,6 @@ public class Map
 	{
 		get {return _scarabCount;}
 	}
-	
 	
 	
 	public Map()
@@ -154,7 +168,19 @@ public class Map
 		sb.AppendFormat("_peopleCount = {0} _scarabCount = {1}", _peopleCount,_scarabCount);
 		return sb.ToString();
 	}
-	
+
+    /// <summary>
+    /// 取得pos位置上面的生物
+    /// </summary>
+    /// <param name="pos">要知道生物種類的位置</param>
+    /// <returns>該位置上的生物種類</returns>
+    public Creature GetCreature(IVector2 pos)
+    {
+        if (CheckPosLegal(pos)) { return Creature.None; }
+        return allMapBlock[pos.x][pos.y].LivingObject;
+    }
+
+
 	public void Initialize(List<List<MapBlock>> allMapData, Dictionary<IVector2, IVector2> holeMapData)
 	{
 		holePos = holeMapData;
@@ -171,7 +197,6 @@ public class Map
 			}
 		}
 	}
-	
 	
 	/// <summary>
 	/// 依據某格的變化,更新可移動區域,
@@ -284,13 +309,33 @@ public class Map
 	{
 		return peopleCanMovePos.Count > 0 || scarabCanMovePos.Count > 0;
 	}
-	
-	public bool CanMove(IVector2 pos, Creature creature)
-	{
-		if (!CheckPosLegal(pos)) {return false;}
-		return allMapBlock[pos.x][pos.y].CanMove(creature);
-	}
-	
+
+    /// <summary>
+    /// 判斷creature回合時，可否控制pos位置的移動
+    /// </summary>
+    /// <param name="pos">要控制移動的pos</param>
+    /// <param name="creature">哪種生物的回合</param>
+    /// <returns>控制錯誤訊息</returns>
+    public ControlMessage CanControl(IVector2 pos, Creature creature)
+    {
+        if (!CheckPosLegal(pos)) { return ControlMessage.PositionError; }
+        if (allMapBlock[pos.x][pos.y].LivingObject == Creature.None) { return ControlMessage.NoneCreature; }
+        if (allMapBlock[pos.x][pos.y].LivingObject != creature) { return ControlMessage.WrongCreature; }
+        else { return ControlMessage.OK; }
+    }
+
+    /// <summary>
+    /// 判斷start的生物可否移動到end
+    /// </summary>
+    /// <param name="start">移動起點</param>
+    /// <param name="end">移動終點</param>
+    /// <returns>可否移動</returns>
+    public bool CanMove(IVector2 start, IVector2 end)
+    {
+        if (!CheckPosLegal(start) || !CheckPosLegal(end)) { return false; }
+        return allMapBlock[end.x][end.y].CanMoveTo(allMapBlock[start.x][start.y].LivingObject);
+    }
+
 	/// <summary>
 	/// 決定可否瞬間移動,可以則transportPos為瞬間移動後的位置
 	/// </summary>
@@ -301,8 +346,7 @@ public class Map
 	{
 		transportPos = pos.Clone();
 		if (!CheckPosLegal(pos)) {return false;}
-		if (creature != Creature.Scarab) {return false;}
-		if (allMapBlock[pos.x][pos.y].MapBlockType != BlockType.Hole) {return false;}
+		if (creature != Creature.Scarab || allMapBlock[pos.x][pos.y].MapBlockType != BlockType.Hole) {return false;}
 		if (!holePos.ContainsKey(pos)) {return false;}
 		else
 		{
@@ -349,7 +393,7 @@ public class Map
 		if (!CheckPosLegal(pos)) {return false;}
 		if (!allMapBlock[pos.x][pos.y].CanInfect(creature)) {return false;}
 
-		allMapBlock[pos.x][pos.y].LivingObject = creature;
+        SetCreature(pos, creature);
 		return true;
 	}
 }
@@ -364,17 +408,6 @@ public class GameLogic
 		new IVector2(-1, 0), // Left
 		new IVector2( 1, 0), // Right
 	};
-	
-//	private int _peopleCount;
-//	public int PeopleCount
-//	{
-//		get {return _peopleCount;} 
-//	}
-//	private int _scarabCount;
-//	public int ScarabCount
-//	{
-//		get {return _scarabCount;}
-//	}
 	
 	private Map map;
 	
@@ -392,31 +425,47 @@ public class GameLogic
 	{
 		map.Initialize(allMapData, holeMapData);
 	}
+
+    /// <summary>
+    /// 檢查在creature回合時，可否控制pos位置的移動 （滑鼠點第一下的檢查）
+    /// </summary>
+    /// <param name="pos">想檢查控制移動的位置</param>
+    /// <param name="creature">現在的回合是哪種生物</param>
+    /// <returns></returns>
+    public ControlMessage CanControl(IVector2 pos, Creature creature)
+    {
+        if (map == null) { return ControlMessage.PositionError; }
+        return map.CanControl(pos, creature);
+    }
+
+    /// <summary>
+    /// 檢查start上的生物移動到end是否為合法移動 (滑鼠點擊第二下的檢查）
+    /// </summary>
+    /// <param name="start">移動起始點</param>
+    /// <param name="end">移動終點</param>
+    /// <returns>能否移動</returns>
+    public bool IsLegalMove(IVector2 start, IVector2 end)
+    {
+        if (map == null) { return false; }
+        if (!map.CanMove(start, end)) { return false; }
+        if ((start.x == end.x && start.y != end.y && Mathf.Abs(end.y - start.y) <= 2) ||
+            (start.y == end.y && start.x != end.x && Mathf.Abs(end.x - start.x) <= 2)) { return true; }
+        return false;
+    }
+
 	/// <summary>
-	/// 檢查生物creature從start到end是否合法
-	/// </summary>
-	public bool IsLegalMove(IVector2 start, IVector2 end, Creature creature)
-	{
-		if (map == null) {return false;}
-		if (!map.CanMove(end,creature)) {return false;}
-		if ((start.x == end.x && start.y != end.y && Mathf.Abs(end.y - start.y) <= 2) ||
-			(start.y == end.y && start.x != end.x && Mathf.Abs(end.x - start.x) <= 2)) {return true;}
-		return false;
-	}
-	
-	/// <summary>
-	/// 處理移動(此處不處理合法性)
+	/// 處理移動(檢查都通過時的處理）
 	/// </summary>
 	/// <param name="start">玩家決定的移動起點</para>
 	/// <param name="end">玩家決定的移動終點</param>
 	/// <param name="realEnd">實際的移動終點</param>
 	/// <param name="infectPositions">感染的座標範圍</param>
-	public MoveType Move(Creature creature, IVector2 start, IVector2 end, 
-		out IVector2 realEnd, out List<IVector2> infectPositions)
+	public MoveType Move(IVector2 start, IVector2 end, out IVector2 realEnd, out List<IVector2> infectPositions)
 	{
 		MoveType moveType = MoveType.None;
 		realEnd = end.Clone();
 		infectPositions = new List<IVector2>();
+        Creature creature = map.GetCreature(start); // 取得要移動的生物
 		if (creature == Creature.None) {return MoveType.None;}
 		if (creature == Creature.People)
 		{
