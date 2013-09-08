@@ -295,7 +295,6 @@ public class GameControl{
                     res = _logic.DecideResult(Creature.People);
                 }
 
-                res = BattleResult.ScarabWin;
                 if (res != BattleResult.None)
                 {
                     UIManager.Instance.ShowResult(res);
