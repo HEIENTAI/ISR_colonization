@@ -28,9 +28,9 @@ public enum PlayStatus
     GameChoosePlaymode,
     MapGenerating, // Map is generating
     RoundScarabTurn,
-    ScarabTurnAnimating, // 蟲族方動畫撥放中, 無法操作
+    RoundScarabReadyMove,// 蟲族已經 click 操作 unit, 準備 click move pos    ScarabTurnAnimating, // 蟲族方動畫撥放中, 無法操作
     RoundHumanTurn,
-    HumanTurnAnimating, // 人類方動畫撥放中, 無法操作
+    RoundHumanReadyMove, // 人類已經 click 操作 unit, 準備 click move pos    HumanTurnAnimating, // 人類方動畫撥放中, 無法操作
     BattleResult
 }
 
