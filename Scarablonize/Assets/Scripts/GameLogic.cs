@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -103,9 +104,9 @@ public class Map
 	
 	Dictionary<IVector2, IVector2> holePos;
 	
-	List<IVector2> peopleCanMovePos;
-	List<IVector2> scarabCanMovePos;
-	 // 生物數量
+	// 生物可移動位置
+	Dictionary<Creature, List<IVector2>> _creatureCanMovePos;
+	// 生物數量
 	Dictionary<Creature, int> _creatureCount;
 	
 	public int PeopleCount
@@ -126,13 +127,14 @@ public class Map
 		}
 	}
 	
-	
 	public Map()
 	{
 		allMapBlock = new List<List<MapBlock>>();
 		holePos = new Dictionary<IVector2, IVector2>();
-		peopleCanMovePos = new List<IVector2>();
-		scarabCanMovePos = new List<IVector2>();
+		
+		_creatureCanMovePos = new  Dictionary<Creature, List<IVector2>>();
+		_creatureCanMovePos.Add(Creature.People, new List<IVector2>());
+		_creatureCanMovePos.Add(Creature.Scarab, new List<IVector2>());
 		_creatureCount = new Dictionary<Creature, int>();
 		_creatureCount.Add(Creature.People, 0);
 		_creatureCount.Add(Creature.Scarab, 0);
@@ -142,8 +144,7 @@ public class Map
 	{
 		allMapBlock = null;
 		holePos = null;
-		peopleCanMovePos = null;
-		scarabCanMovePos = null;
+		_creatureCanMovePos = null;
 		_creatureCount = null;
 	}
 	
@@ -167,14 +168,13 @@ public class Map
 			}
 		}
 		sb.AppendFormat("peopleCanMovePos:\n");
-		for (int index = 0; index < peopleCanMovePos.Count; ++index)
+		foreach (Creature creature in _creatureCanMovePos.Keys)
 		{
-			sb.AppendFormat("peopleCanMovePos[{0}] = {1}\n", index, peopleCanMovePos[index].ToDataString());
-		}
-		sb.AppendFormat("scarabCanMovePos:\n");
-		for (int index = 0; index < scarabCanMovePos.Count; ++index)
-		{
-			sb.AppendFormat("scarabCanMovePos[{0}] = {1}\n", index, scarabCanMovePos[index].ToDataString());
+			sb.AppendFormat("生物({0})的可移動位置:\n", creature);
+			for(int index = 0; index <_creatureCanMovePos[creature].Count; ++index)
+			{
+				sb.AppendFormat("	pos[{0}] = {1}\n", index, _creatureCanMovePos[creature][index].ToDataString());
+			}
 		}
 		foreach(Creature creature in _creatureCount.Keys)
 		{
@@ -213,6 +213,40 @@ public class Map
 	}
 	
 	/// <summary>
+	/// 將creature的可移動位置增加pos(不做pos檢查)
+	/// </summary>
+	/// <param name='creature'>要增加可移動位置的生物種類</param>
+	/// <param name='pos'>要加的可移動位置</param>
+	void AddCanWorkPos(Creature creature, IVector2 pos)
+	{
+		// 如果判斷是否有creature的可移動位置儲存,沒有就產生一個
+		if (!_creatureCanMovePos.ContainsKey(creature))
+		{
+			_creatureCanMovePos.Add(creature, new List<IVector2>());
+		}
+		// 是否已經存入此位置,沒有才加入pos
+		if (!_creatureCanMovePos[creature].Contains(pos))
+		{
+			_creatureCanMovePos[creature].Add(pos);
+		}
+	}
+	
+	/// <summary>
+	/// 將creature的可移動位置刪除pos(不做pos檢查)
+	/// </summary>
+	/// <param name='creature'>要刪除可移動位置的生物種類</param>
+	/// <param name='pos'>要刪除的可移動位置</param>
+	void RemoveCanWorkPos(Creature creature, IVector2 pos)
+	{
+		// 如果判斷是否有creature的可移動位置儲存,沒有就產生一個
+		if (!_creatureCanMovePos.ContainsKey(creature))
+		{
+			_creatureCanMovePos.Add(creature, new List<IVector2>());
+		}
+		_creatureCanMovePos[creature].Remove(pos);
+	}
+	
+	/// <summary>
 	/// 依據某格的變化,更新可移動區域,
 	/// 注意:得先更新該格資訊
 	/// </summary>
@@ -224,32 +258,24 @@ public class Map
 			for (int diffX = -2; diffX <= 2; ++diffX)
 			{
 				if (diffX == 0) {continue;}
-				if (CheckPosLegal(new IVector2(pos.x + diffX, pos.y)))
+				IVector2 changePos = new IVector2(pos.x + diffX, pos.y);
+				if (CheckPosLegal(changePos))
 				{
-					switch(allMapBlock[pos.x + diffX][pos.y].LivingObject)
+					if (allMapBlock[pos.x][pos.y].CanMoveTo(allMapBlock[changePos.x][changePos.y].LivingObject))
 					{
-					case Creature.People:
-						if (!peopleCanMovePos.Contains(pos)) {peopleCanMovePos.Add(pos);}
-						break;
-					case Creature.Scarab:
-						if (!scarabCanMovePos.Contains(pos)) {scarabCanMovePos.Add(pos);}
-						break;
+						AddCanWorkPos(allMapBlock[changePos.x][changePos.y].LivingObject, pos);
 					}
 				}
 			}
 			for (int diffY = -2; diffY <= 2; ++diffY)
 			{
 				if (diffY == 0){continue;}
-				if (CheckPosLegal(new IVector2(pos.x, pos.y + diffY)))
+				IVector2 changePos = new IVector2(pos.x, pos.y + diffY);
+				if (CheckPosLegal(changePos))
 				{
-					switch(allMapBlock[pos.x][pos.y + diffY].LivingObject)
+					if (allMapBlock[pos.x][pos.y].CanMoveTo(allMapBlock[changePos.x][changePos.y].LivingObject))
 					{
-					case Creature.People:
-						if (!peopleCanMovePos.Contains(pos)) {peopleCanMovePos.Add(pos);}
-						break;
-					case Creature.Scarab:
-						if (!scarabCanMovePos.Contains(pos)) {scarabCanMovePos.Add(pos);}
-						break;
+						AddCanWorkPos(allMapBlock[changePos.x][changePos.y].LivingObject, pos);
 					}
 				}
 			}
@@ -259,33 +285,19 @@ public class Map
 			for (int diffX = -2; diffX <= 2; ++diffX)
 			{
 				if (diffX == 0) {continue;}
-				if (CheckPosLegal(new IVector2(pos.x + diffX, pos.y)))
+				IVector2 changePos = new IVector2(pos.x +diffX, pos.y);
+				if (CheckPosLegal(changePos))
 				{
-					switch(allMapBlock[pos.x + diffX][pos.y].LivingObject)
-					{
-					case Creature.People:
-						peopleCanMovePos.Remove(pos);
-						break;
-					case Creature.Scarab:
-						scarabCanMovePos.Remove(pos);
-						break;
-					}
+					RemoveCanWorkPos(allMapBlock[changePos.x][changePos.y].LivingObject, pos);
 				}
 			}
 			for (int diffY = -2; diffY <= 2; ++diffY)
 			{
 				if (diffY == 0){continue;}
-				if (CheckPosLegal(new IVector2(pos.x, pos.y + diffY)))
+				IVector2 changePos = new IVector2(pos.x, pos.y + diffY);
+				if (CheckPosLegal(changePos))
 				{
-					switch(allMapBlock[pos.x][pos.y + diffY].LivingObject)
-					{
-					case Creature.People:
-						peopleCanMovePos.Remove(pos);
-						break;
-					case Creature.Scarab:
-						scarabCanMovePos.Remove(pos);
-						break;
-					}
+					RemoveCanWorkPos(allMapBlock[changePos.x][changePos.y].LivingObject, pos);
 				}
 			}
 		}
@@ -306,14 +318,8 @@ public class Map
 	/// </summary>
 	public bool HasMove(Creature creature)
 	{
-		switch(creature)
-		{
-		case Creature.People:
-			return peopleCanMovePos.Count > 0;
-		case Creature.Scarab:
-			return scarabCanMovePos.Count > 0;
-		}
-		return false;
+		if (_creatureCanMovePos == null || !_creatureCanMovePos.ContainsKey(creature)) {return false;}
+		return _creatureCanMovePos[creature].Count > 0;
 	}
 	
 	// <summary>
@@ -321,7 +327,12 @@ public class Map
 	/// </summary>
 	public bool HasAnyMove()
 	{
-		return peopleCanMovePos.Count > 0 || scarabCanMovePos.Count > 0;
+		if (_creatureCanMovePos == null) {return false;}
+		foreach(List<IVector2> oneCreatureCanMovePos in _creatureCanMovePos.Values)
+		{
+			if (oneCreatureCanMovePos.Count > 0) {return true;}
+		}
+		return false;
 	}
 
     /// <summary>
@@ -381,29 +392,11 @@ public class Map
 		{
 			--_creatureCount[allMapBlock[pos.x][pos.y].LivingObject];
 		}
-//		switch(allMapBlock[pos.x][pos.y].LivingObject)
-//		{
-//		case Creature.People:
-//			--_peopleCount;
-//			break;
-//		case Creature.Scarab:
-//			--_scarabCount;
-//			break;
-//		}
 		allMapBlock[pos.x][pos.y].LivingObject = creature;
 		if (_creatureCount.ContainsKey(allMapBlock[pos.x][pos.y].LivingObject))
 		{
 			++_creatureCount[allMapBlock[pos.x][pos.y].LivingObject];
 		}
-//		switch(allMapBlock[pos.x][pos.y].LivingObject)
-//		{
-//		case Creature.People:
-//			++_peopleCount;
-//			break;
-//		case Creature.Scarab:
-//			++_scarabCount;
-//			break;
-//		}
 		RefreshCanWork(pos);
 	}
 	
