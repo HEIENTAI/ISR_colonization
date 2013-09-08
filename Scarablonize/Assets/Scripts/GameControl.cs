@@ -210,6 +210,7 @@ public class GameControl{
                 List<IVector2> infectPositions = new List<IVector2>();
                 IVector2 realEnd;
                 MoveType moveType = _logic.Move(_currentChoosedBlock.Block.Pos, data.Block.Pos, out realEnd, out infectPositions);
+                bool isHoleTeleport = ((data.Block.Pos.x != realEnd.x) && (data.Block.Pos.y != realEnd.y));
 
                 DebugLog(" Move Start : " + _currentChoosedBlock.Block.Pos.x.ToString() + "," + _currentChoosedBlock.Block.Pos.y.ToString() +
                          "    End: " + data.Block.Pos.x.ToString() + "," + data.Block.Pos.y.ToString() +
@@ -220,6 +221,7 @@ public class GameControl{
                     //移動場景物件
                     MapBlock destBlockMove = _logic.GetMapBlock(realEnd);
                     MapGenerator.CopyMoveUnit(_currentChoosedBlock.Block, destBlockMove);
+
                     for (int i = 0; i < infectPositions.Count; i++)
                     {
                         MapBlock block = _logic.GetMapBlock(infectPositions[i]);
@@ -237,9 +239,9 @@ public class GameControl{
                     }
 
                     if(infectPositions.Count > 0)
-                        UIManager.Instance.ShowCenterMsg(" Infect !!! ");
+                        UIManager.Instance.ShowCenterMsg((isHoleTeleport? "[Teleport]":"") + " Infect !!! ");
                     else
-                        UIManager.Instance.ShowCenterMsg(" Move !");
+                        UIManager.Instance.ShowCenterMsg((isHoleTeleport ? "[Teleport]" : "") + " Move !");
 
                     DebugLog(" 淫內感染   infect nums. " + infectPositions.Count.ToString());
                 }
@@ -270,9 +272,9 @@ public class GameControl{
                     }
 
                     if (infectPositions.Count > 0)
-                        UIManager.Instance.ShowCenterMsg(" Clone and Infect !!! ");
+                        UIManager.Instance.ShowCenterMsg((isHoleTeleport ? "[Teleport]" : "") + " Clone and Infect !!! ");
                     else
-                        UIManager.Instance.ShowCenterMsg(" Clone ! ");
+                        UIManager.Instance.ShowCenterMsg((isHoleTeleport ? "[Teleport]" : "") + " Clone ! ");
 
                     DebugLog("MoveType.Clone " + realEnd.DataToString());
                 }
@@ -293,12 +295,26 @@ public class GameControl{
                     res = _logic.DecideResult(Creature.People);
                 }
 
+                res = BattleResult.ScarabWin;
                 if (res != BattleResult.None)
                 {
                     UIManager.Instance.ShowResult(res);
                     _currentPlayStatus = PlayStatus.BattleResult; //本局結束
 
                     StartCoroutine(WaitReturnToMain()); //準備回到主畫面
+
+                    if(res == BattleResult.Draw)
+                    {
+                        UIManager.Instance.ShowCenterMsg("Draw !");
+                    }
+                    else if(res ==BattleResult.PeopleWin)
+                    {
+                        UIManager.Instance.ShowCenterMsg("Human Win !");
+                    }
+                    else if (res == BattleResult.ScarabWin)
+                    {
+                        UIManager.Instance.ShowCenterMsg("Scarab Win !\n\n Colonization Success !!!");
+                    }
                 }
 
                 _currentChoosedBlock = null;
@@ -346,7 +362,7 @@ public class GameControl{
     IEnumerator WaitReturnToMain()
     {
         DebugLog("WaitReturnToMain");
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(8.0f);
 
         ReturnToMain();
         //_currentPlayStatus = PlayStatus.GameTitle;
