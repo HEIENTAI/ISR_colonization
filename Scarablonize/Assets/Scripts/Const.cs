@@ -38,4 +38,4 @@ public enum PlayMode
 {
     SinglePlay,
     TwoPlayer
-}public class TagConst{	public const string SinglePlay = "1P";	public const string TwoPlayers = "2P";	public const string Staff = "Staff";	public static readonly string[] Levels = new string[]	{		"Level1",		"Level2",		"Level3",		"Level4"	};}
+}public enum ShowStatus{	Hide,	BringIn,	BringOut}public class TagConst{	public const string SinglePlay = "1P";	public const string TwoPlayers = "2P";	public const string Staff = "Staff";	public static readonly string[] Levels = new string[]	{		"Level1",		"Level2",		"Level3",		"Level4"	};}
