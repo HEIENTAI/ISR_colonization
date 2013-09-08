@@ -16,6 +16,7 @@ public class MapGenerator {
 	private static  string[] tokenDelimiter = new string[] { "," };
 	
 	private static GameObject root = null;
+    private static GameObject levelGo = null;
 
     private static List<List<MapBlock>> _generatedAllMapData = null;
 	public static void Generate(ushort LevelID)
@@ -72,6 +73,14 @@ public class MapGenerator {
 			root = new GameObject("Blocks");
 		}
 
+        levelGo = GameObject.Find("CurrentLevel");
+
+        if (levelGo == null)
+        { 
+            levelGo = new GameObject("CurrentLevel");
+            levelGo.AddComponent<GameLevel>();
+        }
+
 		TextAsset levelFile = Resources.Load(Const.DIR_LEVEL + fileName) as TextAsset;
 
 		if(levelFile != null)
@@ -85,7 +94,7 @@ public class MapGenerator {
             BlockGraphicType graphicType;
             MapBlock block = null;
             List<MapBlock> oneBlockRow = null;
-			for(int i=0; i< lines.Length; i++)
+			for(int i=2; i< lines.Length; i++)
 			{
                 oneBlockRow = new List<MapBlock>();
 				string[] blockToken = lines[i].Split(tokenDelimiter, StringSplitOptions.None);
@@ -143,9 +152,12 @@ public class MapGenerator {
 		
 		if(newBlock)
 		{
-			float xPos = offset_x + Tile_Width*x;
-			float yPos = offset_y + Tile_Height*y;
-			newBlock.transform.position = new Vector3(xPos, yPos, 0);
+			float xPos = offset_x/2f + Tile_Width*x;
+			float yPos = offset_y/2f + Tile_Height*y;
+
+            OTSprite sprite = newBlock.GetComponent<OTSprite>();
+            sprite.position = new Vector2(xPos, yPos);
+            sprite.size = new Vector2(Tile_Width, Tile_Height);
 			newBlock.transform.parent = root.transform;
 		}
 	}
