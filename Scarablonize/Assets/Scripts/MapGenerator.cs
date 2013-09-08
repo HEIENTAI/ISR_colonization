@@ -94,15 +94,20 @@ public class MapGenerator {
 			BlockGraphicType graphicType;
             MapBlock block = null;
             LivingObject living = null;
-            List<MapBlock> oneBlockRow = null;
+            List<MapBlock> oneBlockCol = null;
+
 			for(int i=0; i< lines.Length-extraLineCount; i++)
 			{
-                oneBlockRow = new List<MapBlock>();
 				string[] blockToken = lines[i].Split(tokenDelimiter, StringSplitOptions.None);
 
                 // handle a new row
 				for(int j=0; j < blockToken.Length; j++)
 				{
+                    if (_generatedAllMapData.Count <= j)
+                    {
+                        oneBlockCol = new List<MapBlock>();
+                        _generatedAllMapData.Add(oneBlockCol);
+                    }
                     graphicType = GetGraphicBlockType(Convert.ToUInt16(blockToken[j]));
                     living = null;
 
@@ -126,9 +131,8 @@ public class MapGenerator {
                         block.LivingObject = Creature.None;
 
                     block.CreatureComponent = living;
-                    oneBlockRow.Add(block);
+                    _generatedAllMapData[j].Add(block);
 				}
-                _generatedAllMapData.Add(oneBlockRow);
 			}
 		}
 	}
