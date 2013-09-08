@@ -133,12 +133,17 @@ public class GameControl{
         {
             case PlayStatus.RoundHumanTurn:
             case PlayStatus.RoundScarabTurn:
-            if ((_currentPlayStatus != PlayStatus.RoundHumanTurn) ||
+            if ((_currentPlayStatus != PlayStatus.RoundHumanTurn) &&
                     (_currentPlayStatus != PlayStatus.RoundScarabTurn))
                 {
-                    DebugLog(" Status error : not round turn status");
+                    DebugLog(" Status error : not round turn status. " + _currentPlayStatus.ToString() );
                     return;
                 }
+
+                //_logic.CanControl();
+                //_logic.IsLegalMove();
+                //_logic.Move();
+
                 break;
             default:
                 DebugLog("Click Tile valid. " + _currentPlayStatus.ToString());
