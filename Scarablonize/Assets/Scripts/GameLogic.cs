@@ -595,7 +595,6 @@ public class GameLogic
 		if (creature == Creature.People)
 		{
 			map.SetCreature(realEnd, creature);
-            Debug.Log(string.Format(map.DebugCanMove(Creature.People)));
 			// 由於是合法移動,不是差一就二
 			if (Mathf.Abs(realEnd.x - start.x) == 1 || Mathf.Abs(realEnd.y - start.y) == 1) 
 			{

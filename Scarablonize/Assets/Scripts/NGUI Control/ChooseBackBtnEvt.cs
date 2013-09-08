@@ -16,7 +16,7 @@ public class ChooseBackBtnEvt : MonoBehaviour
 
     void OnClick()
     {
+        GameControl.Instance.ReturnToMain();
         Debug.Log("Back");
-        
     }
 }

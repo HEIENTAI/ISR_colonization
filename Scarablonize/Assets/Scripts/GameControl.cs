@@ -348,6 +348,17 @@ public class GameControl{
         DebugLog("WaitReturnToMain");
         yield return new WaitForSeconds(5.0f);
 
+        ReturnToMain();
+        //_currentPlayStatus = PlayStatus.GameTitle;
+        //_logic.ClearMap();
+
+        //GameObject blockRoot = GameObject.Find("Blocks");
+        //GameObject.DestroyImmediate(blockRoot);
+        //TriggerGameEnter();
+    }
+
+    public void ReturnToMain()
+    {
         _currentPlayStatus = PlayStatus.GameTitle;
         _logic.ClearMap();
 
