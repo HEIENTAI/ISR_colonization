@@ -11,14 +11,19 @@ public static class CommonFunction
 	{
 		return string.Format("({0}, {1})", vec.x, vec.y);
 	}
+
+    public static uint DataToUInt(this IVector2 vec)
+    {
+        return (uint)vec.x * Const.PosXTOIntTime + (uint)vec.y;
+    }
 }
 
 public class Map
 {
 	List<List<MapBlock>> allMapBlock;
 	
-	Dictionary<IVector2, IVector2> holePos;
-	
+    //Dictionary<IVector2, IVector2> holePos;
+    Dictionary<uint, IVector2> holePos;
 	// 生物可移動位置
 	Dictionary<Creature, List<IVector2>> _creatureCanMovePos;
 	// 生物數量
@@ -45,8 +50,9 @@ public class Map
 	public Map()
 	{
 		allMapBlock = new List<List<MapBlock>>();
-		holePos = new Dictionary<IVector2, IVector2>();
-		
+        //holePos = new Dictionary<IVector2, IVector2>();
+        holePos = new Dictionary<uint, IVector2>();
+
 		_creatureCanMovePos = new  Dictionary<Creature, List<IVector2>>();
 		_creatureCanMovePos.Add(Creature.People, new List<IVector2>());
 		_creatureCanMovePos.Add(Creature.Scarab, new List<IVector2>());
@@ -77,9 +83,10 @@ public class Map
 		if (holePos != null)
 		{
 			sb.AppendFormat("holePos:\n");
-			foreach(KeyValuePair<IVector2, IVector2> oneHoldPos in holePos)
+            foreach(KeyValuePair<uint, IVector2> oneHoldPos in holePos)
 			{
-				sb.AppendFormat("holePos[{0}] = {1}\n", oneHoldPos.Key.DataToString(), oneHoldPos.Value.DataToString());
+				sb.AppendFormat("holePos[({0}, {1})] = {2}\n", oneHoldPos.Key / Const.PosXTOIntTime, oneHoldPos.Key % Const.PosXTOIntTime, 
+                    oneHoldPos.Value.DataToString());
 			}
 		}
 		sb.AppendFormat("peopleCanMovePos:\n");
@@ -117,8 +124,12 @@ public class Map
 
 	public void Initialize(List<List<MapBlock>> allMapData, Dictionary<IVector2, IVector2> holeMapData)
 	{
-		holePos = holeMapData;
-		allMapBlock = allMapData;
+        allMapBlock = allMapData;
+        if (holePos == null) { holePos = new Dictionary<uint, IVector2>(); }
+        foreach (IVector2 key in holeMapData.Keys)
+        {
+            holePos.Add(key.DataToUInt(), holeMapData[key]);
+        }
 		
 		foreach(List<MapBlock> rowBlockData in allMapData)
 		{
@@ -346,11 +357,11 @@ public class Map
 	{
 		transportPos = pos.Clone();
 		if (!CheckPosLegal(pos)) {return false;}
-		if (creature != Creature.Scarab || allMapBlock[pos.x][pos.y].MapBlockType != BlockType.Hole) {return false;}
-		if (holePos == null || !holePos.ContainsKey(pos)) {return false;}
+        if (creature != Creature.Scarab || allMapBlock[pos.x][pos.y].MapBlockType != BlockType.Hole) { return false; }
+		if (holePos == null || !holePos.ContainsKey(pos.DataToUInt() )) {return false;}
 		else
 		{
-			transportPos = holePos[pos].Clone();
+			transportPos = holePos[pos.DataToUInt()].Clone();
 			if (!CheckPosLegal(transportPos)) {return false;}
 			if (allMapBlock[transportPos.x][transportPos.y].LivingObject != Creature.None) {return false;}
 			else {return true;}

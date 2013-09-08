@@ -1,4 +1,4 @@
-﻿public class Const{	public const int MapSize = 10;
+﻿public class Const{    public const int PosXTOIntTime = 100; // 將Ivector2轉成整數要乘的倍率	public const int MapSize = 10;
     public const string FILENAME_LEVEL_PREFIX = "level"; // levelxxx.txt 的檔名
     public const string MAP_NAME_STARTSCENE = "Main"; //should be useless...
     public const string MAP_NAME_EMPTY = "xLevel";
