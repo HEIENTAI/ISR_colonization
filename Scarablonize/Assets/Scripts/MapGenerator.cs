@@ -75,16 +75,6 @@ public class MapGenerator {
 			root = new GameObject("Blocks");
 		}
 
-        levelGo = GameObject.Find("CurrentLevel");
-		
-		GameLevel currentLevel = null;
-		
-        if (levelGo == null)
-        { 
-            levelGo = new GameObject("CurrentLevel");
-            currentLevel = levelGo.AddComponent<GameLevel>();
-        }
-
 		TextAsset levelFile = Resources.Load(Const.DIR_LEVEL + fileName) as TextAsset;
 
 		if(levelFile != null)
@@ -100,9 +90,6 @@ public class MapGenerator {
 			string[] humanInitPos = lines[lines.Length-extraLineCount+1].Split(tokenDelimiter, StringSplitOptions.None);
 			Vector2 scPos = new Vector2( float.Parse(scarabInitPos[0]),float.Parse(scarabInitPos[1]));
 			Vector2 humanPos = new Vector2(float.Parse(humanInitPos[0]),float.Parse(humanInitPos[1]));
-			
-			currentLevel.Scarab = generateScarab(scPos);
-			currentLevel.Human = generateHuman(humanPos);
 			
             BlockGraphicType graphicType;
             MapBlock block = null;
@@ -120,9 +107,17 @@ public class MapGenerator {
                     block = new MapBlock(); // new block data sh20130908
                     block.Pos.x = j;
                     block.Pos.y = i;
-                    block.LivingObject = Creature.None;
                     block.MapBlockType = GetBlockType(graphicType);
                     block.BlockObject = GenerateBlock(graphicType, block.Pos.x, block.Pos.y);
+
+                    if ((block.Pos.x == scPos.x) && (block.Pos.y == scPos.y))
+                        block.LivingObject = Creature.Scarab;
+                    else if ((block.Pos.x == humanPos.x) && (block.Pos.y == humanPos.y))
+                        block.LivingObject = Creature.People;
+                    else
+                        block.LivingObject = Creature.None;
+
+                    block.LivingObject = Creature.None;
 
                     oneBlockRow.Add(block);
 				}
