@@ -21,6 +21,12 @@ public class MapGenerator {
 	private static int extraLineCount = 2;
 
     private static List<List<MapBlock>> _generatedAllMapData = null;
+	
+	private static Dictionary<IVector2, IVector2> _generatedHoleData = null;
+	
+	private static IVector2 firstHolePos = null;
+	private static IVector2 secondHolePos = null;
+	
 	public static void Generate(ushort LevelID)
 	{
         string fileName = Const.FILENAME_LEVEL_PREFIX + LevelID.ToString();
@@ -74,6 +80,9 @@ public class MapGenerator {
 		{
 			root = new GameObject("Blocks");
 		}
+		
+		firstHolePos = null;
+		secondHolePos = null;
 
 		TextAsset levelFile = Resources.Load(Const.DIR_LEVEL + fileName) as TextAsset;
 
@@ -83,6 +92,11 @@ public class MapGenerator {
             if (_generatedAllMapData != null)
                 _generatedAllMapData.Clear();
             _generatedAllMapData = new List<List<MapBlock>>();
+			
+			if(_generatedHoleData!=null)
+				_generatedHoleData.Clear();
+			
+			_generatedHoleData = new Dictionary<IVector2, IVector2>();
 
 			string[] lines = levelFile.text.Split(lineDelimiter, StringSplitOptions.None);
 			
@@ -160,6 +174,16 @@ public class MapGenerator {
 			break;
             case BlockGraphicType.Hole:  
 			    newBlock = GameObject.Instantiate(Resources.Load(Const.DIR_Prefab + "Hole")) as GameObject;
+			    if(firstHolePos == null)
+					firstHolePos = new IVector2(x,y);
+			    else
+				    secondHolePos = new IVector2(x,y);
+				    
+			    if(firstHolePos != null && secondHolePos != null)
+				{
+					_generatedHoleData.Add(firstHolePos,secondHolePos);
+					_generatedHoleData.Add(secondHolePos,firstHolePos);
+				}
 			break;
             case BlockGraphicType.House:  
 			    newBlock = GameObject.Instantiate(Resources.Load(Const.DIR_Prefab + "House")) as GameObject;
@@ -272,7 +296,7 @@ public class MapGenerator {
 		newGo.transform.position = new Vector3(xPos, yPos, -2);
         newGo.transform.localScale = new Vector3(Tile_Width, Tile_Height, 1);
         living = newGo.AddComponent<LivingObject>();
-
+        living.bodyGo = newGo;
 		return newGo;
 	}
 
@@ -284,7 +308,7 @@ public class MapGenerator {
 		newGo.transform.position = new Vector3(xPos, yPos, -2);
         newGo.transform.localScale = new Vector3(Tile_Width, Tile_Height, 1);
         living = newGo.AddComponent<LivingObject>();
-
+        living.bodyGo = newGo;
 		return newGo;
 		
 	}
@@ -301,7 +325,7 @@ public class MapGenerator {
     // map hole blocks
     public static Dictionary<IVector2, IVector2> GeneratedHoleData
     {
-        get { return null; } // todo
+        get { return _generatedHoleData; } // todo
     }
 
 }

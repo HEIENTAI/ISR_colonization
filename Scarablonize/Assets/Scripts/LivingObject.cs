@@ -15,6 +15,16 @@ public class LivingObject : MonoBehaviour {
 	
 	}
 
+    public void HighLight()
+    {
+        bodyGo.transform.localScale = new Vector3(70, 70, 1);
+    }
+
+    public void UnHighLight()
+    {
+        bodyGo.transform.localScale = new Vector3(64, 64, 1);
+    }
+
     public virtual void MoveUp()
     { 
     
