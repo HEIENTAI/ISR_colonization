@@ -164,7 +164,7 @@ public class GameControl{
 					UIManager.Instance.ShowCenterMsg("you can't do it !");                    return;                }
                 // todo: some click effect			if(_currentSelection != null)
 			    _currentSelection.Block.CreatureComponent.UnHighLight();
-
+
                 // ready click 2                if (NowHitter == Creature.People)
                 {                    _currentPlayStatus = PlayStatus.RoundHumanReadyMove;                }                else if (NowHitter == Creature.Scarab)                {
                     _currentPlayStatus = PlayStatus.RoundScarabReadyMove;
