@@ -10,7 +10,7 @@ public class MapGenerator {
 	public static int Tile_Height = 64;
 	
 	private static int offset_x = -Tile_Width*NumOfTiles_X;
-	private static int offset_y = -Tile_Height*NumOfTiles_Y;
+	private static int offset_y = Tile_Height*NumOfTiles_Y;
 	
 	private static  string[] lineDelimiter = new string[] { "\r\n", "\n" };
 	private static  string[] tokenDelimiter = new string[] { "," };
@@ -118,8 +118,8 @@ public class MapGenerator {
                     graphicType = GetGraphicBlockType(Convert.ToUInt16(blockToken[j]));
 
                     block = new MapBlock(); // new block data sh20130908
-                    block.Pos.x = i;
-                    block.Pos.y = j;
+                    block.Pos.x = j;
+                    block.Pos.y = i;
                     block.LivingObject = Creature.None;
                     block.MapBlockType = GetBlockType(graphicType);
                     block.BlockObject = GenerateBlock(graphicType, block.Pos.x, block.Pos.y);
@@ -166,7 +166,7 @@ public class MapGenerator {
 		if(newBlock)
 		{
 			float xPos = offset_x/2f + Tile_Width*x;
-			float yPos = offset_y/2f + Tile_Height*y;
+			float yPos = offset_y/2f - Tile_Height*y;
 
             OTSprite sprite = newBlock.GetComponent<OTSprite>();
             sprite.position = new Vector2(xPos, yPos);
@@ -180,20 +180,22 @@ public class MapGenerator {
 	private static GameObject generateHuman(Vector2 pos)
 	{
 		float xPos = offset_x/2f + Tile_Width*pos.x;
-		float yPos = offset_y/2f + Tile_Height*pos.y;
+		float yPos = offset_y/2f - Tile_Height*pos.y;
 		GameObject newGo = GameObject.Instantiate(Resources.Load("Prefab/Human")) as GameObject;
 		newGo.transform.position = new Vector3(xPos, yPos, -2);
-		
+        newGo.transform.localScale = new Vector3(Tile_Width, Tile_Height, 1);
+
 		return newGo;
 	}
 	
 	private static GameObject generateScarab(Vector2 pos)
 	{
 		float xPos = offset_x/2f + Tile_Width*pos.x;
-		float yPos = offset_y/2f + Tile_Height*pos.y;
+		float yPos = offset_y/2f - Tile_Height*pos.y;
 		GameObject newGo = GameObject.Instantiate(Resources.Load("Prefab/Scarab")) as GameObject;
 		newGo.transform.position = new Vector3(xPos, yPos, -2);
-		
+        newGo.transform.localScale = new Vector3(Tile_Width, Tile_Height, 1);
+
 		return newGo;
 		
 	}

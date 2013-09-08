@@ -10,6 +10,7 @@ public class MapBlock
 
     // Visual about
     private GameObject _blockObject = null;
+    private MapBlockData _blockData = null;
     public GameObject BlockObject {
         get
         {
@@ -25,14 +26,16 @@ public class MapBlock
                 return;
             }
 
+            // init input event
             OTSprite sprite = BlockOTSprite;
             if (sprite == null)
             {
                 GameControl.Instance.DebugLog("Block OTSprite is null.");
                 return;
             }
-
+            sprite.registerInput = true;
             sprite.onInput = MapBlockManager.OnBlockInput;
+            _blockData = BlockData; // data add component init
         }
     }
 
@@ -49,6 +52,29 @@ public class MapBlock
             return sprite;
         }
     }
+
+    public MapBlockData BlockData
+    {
+        get
+        {
+            if (_blockObject == null)
+            {
+                GameControl.Instance.DebugLog("Block gameobject is null.");
+                return null;
+            }
+            if (_blockData == null)
+                _blockData = _blockObject.GetComponentInChildren<MapBlockData>();
+            if (_blockData == null)
+            {
+                _blockData = _blockObject.AddComponent<MapBlockData>();
+                _blockData.Column = (ushort) Pos.x;
+                _blockData.Row = (ushort) Pos.y;
+            }
+
+            return _blockData;
+        }
+    }
+
     public MapBlock()
     {
         Pos = IVector2.zero;
@@ -107,7 +133,28 @@ public class MapBlockManager {
     {
         // check for the left mouse button
         if (Input.GetMouseButtonDown(0))
-            Debug.Log("Left Button clicked On " + owner.name);
+        {
+            MapBlockData data = GetBlockData(owner);
+            //GameControl.Instance.DebugLog(" data : " + data.Row.ToString() + "   " + data.Column.ToString());
+            GameControl.Instance.MapTileClick(data.Column, data.Row);
+        }
+    }
+
+    public static MapBlockData GetBlockData(OTObject sprite)
+    {
+        if (sprite == null)
+        {
+            GameControl.Instance.DebugLog("sprite == null");
+            return null;
+        }
+
+        if (sprite.gameObject == null)
+        {
+            GameControl.Instance.DebugLog("sprite.gameObject == null");
+            return null;
+        }
+
+        return sprite.gameObject.GetComponentInChildren<MapBlockData>();
     }
 
     ~MapBlockManager()
