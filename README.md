@@ -7,16 +7,16 @@ Indie Speed Run , yes.
 Team : Hello, World.
  
  
-SH
+SH  
 programmer, captain
  
-Peter Lee
+Peter Lee  
 programmer, art
  
-SimonLin
+SimonLin  
 programmer
 
-feles
+feles  
 programmer
 
 all music are from www.jamendo.com
