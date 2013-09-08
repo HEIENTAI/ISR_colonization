@@ -400,7 +400,6 @@ public class Map
 
 public class GameLogic
 {
-	
 	List<IVector2> neighborDir = new List<IVector2>()
 	{
 		new IVector2( 0, 1), // Up
@@ -408,6 +407,19 @@ public class GameLogic
 		new IVector2(-1, 0), // Left
 		new IVector2( 1, 0), // Right
 	};
+	
+	/// <summary>
+	/// 取得人數
+	/// </summary>
+	public int PeopleCount
+	{
+		get {return (map == null) ? 0 : map.PeopleCount;}
+	}
+	
+	public int ScarabCount
+	{
+		get {return (map == null) ? 0 : map.ScarabCount;}
+	}
 	
 	private Map map;
 	
