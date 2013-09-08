@@ -1,0 +1,610 @@
+Initialize engine version: 4.2.0f4 (38efbd14869d)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [nvumdshim.dll 9.18.13.697]
+    Renderer: Intel(R) HD Graphics 3000
+    Vendor:   Intel
+    VRAM:     978 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 DF24=0 INTZ=1 RAWZ=0 NULL=1 RESZ=0 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\GITHUB\ISR_colonization\Scarablonize\Launch\Scarab Invasion_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\GITHUB\ISR_colonization\Scarablonize\Launch\Scarab Invasion_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\GITHUB\ISR_colonization\Scarablonize\Launch\Scarab Invasion_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\GITHUB\ISR_colonization\Scarablonize\Launch\Scarab Invasion_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\GITHUB\ISR_colonization\Scarablonize\Launch\Scarab Invasion_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
+Loading D:\GITHUB\ISR_colonization\Scarablonize\Launch\Scarab Invasion_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
+Platform assembly: D:\GITHUB\ISR_colonization\Scarablonize\Launch\Scarab Invasion_Data\Managed\SmoothMoves_Runtime.dll (this message is harmless)
+Loading D:\GITHUB\ISR_colonization\Scarablonize\Launch\Scarab Invasion_Data\Managed\SmoothMoves_Runtime.dll into Unity Child Domain
+- Completed reload, in  0.082 seconds
+desktop: 1920x1080 60Hz; virtual: 1920x1848 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+Platform assembly: D:\GITHUB\ISR_colonization\Scarablonize\Launch\Scarab Invasion_Data\Managed\System.Xml.dll (this message is harmless)
+Platform assembly: D:\GITHUB\ISR_colonization\Scarablonize\Launch\Scarab Invasion_Data\Managed\System.dll (this message is harmless)
+UnloadTime: 0.043385 ms
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 680.
+Total: 1.103300 ms (FindLiveObjects: 0.049450 ms CreateObjectMapping: 0.024258 ms MarkObjects: 0.515495 ms  DeleteObjects: 0.010263 ms)
+
+蟲族先攻
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Map : allMapBlock
+allMapBlock[0][0] = [MapBlock: Pos=(0, 0), LivingObject=Scarab, MapBlockType=Sand]
+allMapBlock[0][1] = [MapBlock: Pos=(0, 1), LivingObject=None, MapBlockType=Sand]
+allMapBlock[0][2] = [MapBlock: Pos=(0, 2), LivingObject=None, MapBlockType=Sand]
+allMapBlock[0][3] = [MapBlock: Pos=(0, 3), LivingObject=None, MapBlockType=Sand]
+allMapBlock[0][4] = [MapBlock: Pos=(0, 4), LivingObject=None, MapBlockType=Sand]
+allMapBlock[0][5] = [MapBlock: Pos=(0, 5), LivingObject=None, MapBlockType=Sand]
+allMapBlock[0][6] = [MapBlock: Pos=(0, 6), LivingObject=None, MapBlockType=Sand]
+allMapBlock[0][7] = [MapBlock: Pos=(0, 7), LivingObject=None, MapBlockType=Sand]
+allMapBlock[0][8] = [MapBlock: Pos=(0, 8), LivingObject=None, MapBlockType=Sand]
+allMapBlock[0][9] = [MapBlock: Pos=(0, 9), LivingObject=None, MapBlockType=Sand]
+allMapBlock[1][0] = [MapBlock: Pos=(1, 0), LivingObject=None, MapBlockType=Sand]
+allMapBlock[1][1] = [MapBlock: Pos=(1, 1), LivingObject=None, MapBlockType=Sand]
+allMapBlock[1][2] = [MapBlock: Pos=(1, 2), LivingObject=None, MapBlockType=Sand]
+allMapBlock[1][3] = [MapBlock: Pos=(1, 3), LivingObject=None, MapBlockType=Pyramid]
+allMapBlock[1][4] = [MapBlock: Pos=(1, 4), LivingObject=None, MapBlockType=Sand]
+allMapBlock[1][5] = [MapBlock: Pos=(1, 5), LivingObject=None, MapBlockType=Sand]
+allMapBlock[1][6] = [MapBlock: Pos=(1, 6), LivingObject=None, MapBlockType=Sand]
+allMapBlock[1][7] = [MapBlock: Pos=(1, 7), LivingObject=None, MapBlockType=Sand]
+allMapBlock[1][8] = [MapBlock: Pos=(1, 8), LivingObject=None, MapBlockType=Sand]
+allMapBlock[1][9] = [MapBlock: Pos=(1, 9), LivingObject=None, MapBlockType=Sand]
+allMapBlock[2][0] = [MapBlock: Pos=(2, 0), LivingObject=None, MapBlockType=Sand]
+allMapBlock[2][1] = [MapBlock: Pos=(2, 1), LivingObject=None, MapBlockType=House]
+allMapBlock[2][2] = [MapBlock: Pos=(2, 2), LivingObject=None, MapBlockType=Sand]
+allMapBlock[2][3] = [MapBlock: Pos=(2, 3), LivingObject=None, MapBlockType=Sand]
+allMapBlock[2][4] = [MapBlock: Pos=(2, 4), LivingObject=None, MapBlockType=Sand]
+allMapBlock[2][5] = [MapBlock: Pos=(2, 5), LivingObject=None, MapBlockType=Sand]
+allMapBlock[2][6] = [MapBlock: Pos=(2, 6), LivingObject=None, MapBlockType=Sand]
+allMapBlock[2][7] = [MapBlock: Pos=(2, 7), LivingObject=None, MapBlockType=Hole]
+allMapBlock[2][8] = [MapBlock: Pos=(2, 8), LivingObject=None, MapBlockType=Sand]
+allMapBlock[2][9] = [MapBlock: Pos=(2, 9), LivingObject=None, MapBlockType=Sand]
+allMapBlock[3][0] = [MapBlock: Pos=(3, 0), LivingObject=None, MapBlockType=Sand]
+allMapBlock[3][1] = [MapBlock: Pos=(3, 1), LivingObject=None, MapBlockType=Sand]
+allMapBlock[3][2] = [MapBlock: Pos=(3, 2), LivingObject=None, MapBlockType=Sand]
+allMapBlock[3][3] = [MapBlock: Pos=(3, 3), LivingObject=None, MapBlockType=Sand]
+allMapBlock[3][4] = [MapBlock: Pos=(3, 4), LivingObject=None, MapBlockType=Sand]
+allMapBlock[3][5] = [MapBlock: Pos=(3, 5), LivingObject=None, MapBlockType=Sand]
+allMapBlock[3][6] = [MapBlock: Pos=(3, 6), LivingObject=None, MapBlockType=Sand]
+allMapBlock[3][7] = [MapBlock: Pos=(3, 7), LivingObject=None, MapBlockType=Sand]
+allMapBlock[3][8] = [MapBlock: Pos=(3, 8), LivingObject=None, MapBlockType=Sand]
+allMapBlock[3][9] = [MapBlock: Pos=(3, 9), LivingObject=None, MapBlockType=Sand]
+allMapBlock[4][0] = [MapBlock: Pos=(4, 0), LivingObject=None, MapBlockType=Sand]
+allMapBlock[4][1] = [MapBlock: Pos=(4, 1), LivingObject=None, MapBlockType=Sand]
+allMapBlock[4][2] = [MapBlock: Pos=(4, 2), LivingObject=None, MapBlockType=Sand]
+allMapBlock[4][3] = [MapBlock: Pos=(4, 3), LivingObject=None, MapBlockType=Sand]
+allMapBlock[4][4] = [MapBlock: Pos=(4, 4), LivingObject=None, MapBlockType=River]
+allMapBlock[4][5] = [MapBlock: Pos=(4, 5), LivingObject=None, MapBlockType=River]
+allMapBlock[4][6] = [MapBlock: Pos=(4, 6), LivingObject=None, MapBlockType=Sand]
+allMapBlock[4][7] = [MapBlock: Pos=(4, 7), LivingObject=None, MapBlockType=Sand]
+allMapBlock[4][8] = [MapBlock: Pos=(4, 8), LivingObject=None, MapBlockType=Sand]
+allMapBlock[4][9] = [MapBlock: Pos=(4, 9), LivingObject=None, MapBlockType=Sand]
+allMapBlock[5][0] = [MapBlock: Pos=(5, 0), LivingObject=None, MapBlockType=Sand]
+allMapBlock[5][1] = [MapBlock: Pos=(5, 1), LivingObject=None, MapBlockType=Sand]
+allMapBlock[5][2] = [MapBlock: Pos=(5, 2), LivingObject=None, MapBlockType=Sand]
+allMapBlock[5][3] = [MapBlock: Pos=(5, 3), LivingObject=None, MapBlockType=Sand]
+allMapBlock[5][4] = [MapBlock: Pos=(5, 4), LivingObject=None, MapBlockType=River]
+allMapBlock[5][5] = [MapBlock: Pos=(5, 5), LivingObject=None, MapBlockType=River]
+allMapBlock[5][6] = [MapBlock: Pos=(5, 6), LivingObject=None, MapBlockType=Sand]
+allMapBlock[5][7] = [MapBlock: Pos=(5, 7), LivingObject=None, MapBlockType=Sand]
+allMapBlock[5][8] = [MapBlock: Pos=(5, 8), LivingObject=None, MapBlockType=Sand]
+allMapBlock[5][9] = [MapBlock: Pos=(5, 9), LivingObject=None, MapBlockType=Sand]
+allMapBlock[6][0] = [MapBlock: Pos=(6, 0), LivingObject=None, MapBlockType=Sand]
+allMapBlock[6][1] = [MapBlock: Pos=(6, 1), LivingObject=None, MapBlockType=Sand]
+allMapBlock[6][2] = [MapBlock: Pos=(6, 2), LivingObject=None, MapBlockType=Sand]
+allMapBlock[6][3] = [MapBlock: Pos=(6, 3), LivingObject=None, MapBlockType=Sand]
+allMapBlock[6][4] = [MapBlock: Pos=(6, 4), LivingObject=None, MapBlockType=Sand]
+allMapBlock[6][5] = [MapBlock: Pos=(6, 5), LivingObject=None, MapBlockType=Sand]
+allMapBlock[6][6] = [MapBlock: Pos=(6, 6), LivingObject=None, MapBlockType=Sand]
+allMapBlock[6][7] = [MapBlock: Pos=(6, 7), LivingObject=None, MapBlockType=Sand]
+allMapBlock[6][8] = [MapBlock: Pos=(6, 8), LivingObject=None, MapBlockType=Sand]
+allMapBlock[6][9] = [MapBlock: Pos=(6, 9), LivingObject=None, MapBlockType=Sand]
+allMapBlock[7][0] = [MapBlock: Pos=(7, 0), LivingObject=None, MapBlockType=Sand]
+allMapBlock[7][1] = [MapBlock: Pos=(7, 1), LivingObject=None, MapBlockType=Sand]
+allMapBlock[7][2] = [MapBlock: Pos=(7, 2), LivingObject=None, MapBlockType=Sand]
+allMapBlock[7][3] = [MapBlock: Pos=(7, 3), LivingObject=None, MapBlockType=Sand]
+allMapBlock[7][4] = [MapBlock: Pos=(7, 4), LivingObject=None, MapBlockType=Sand]
+allMapBlock[7][5] = [MapBlock: Pos=(7, 5), LivingObject=None, MapBlockType=Sand]
+allMapBlock[7][6] = [MapBlock: Pos=(7, 6), LivingObject=None, MapBlockType=Hole]
+allMapBlock[7][7] = [MapBlock: Pos=(7, 7), LivingObject=None, MapBlockType=Sand]
+allMapBlock[7][8] = [MapBlock: Pos=(7, 8), LivingObject=None, MapBlockType=Sand]
+allMapBlock[7][9] = [MapBlock: Pos=(7, 9), LivingObject=None, MapBlockType=Sand]
+allMapBlock[8][0] = [MapBlock: Pos=(8, 0), LivingObject=None, MapBlockType=Sand]
+allMapBlock[8][1] = [MapBlock: Pos=(8, 1), LivingObject=None, MapBlockType=House]
+allMapBlock[8][2] = [MapBlock: Pos=(8, 2), LivingObject=None, MapBlockType=Sand]
+allMapBlock[8][3] = [MapBlock: Pos=(8, 3), LivingObject=None, MapBlockType=Sand]
+allMapBlock[8][4] = [MapBlock: Pos=(8, 4), LivingObject=None, MapBlockType=Sand]
+allMapBlock[8][5] = [MapBlock: Pos=(8, 5), LivingObject=None, MapBlockType=Sand]
+allMapBlock[8][6] = [MapBlock: Pos=(8, 6), LivingObject=None, MapBlockType=Sand]
+allMapBlock[8][7] = [MapBlock: Pos=(8, 7), LivingObject=None, MapBlockType=Sand]
+allMapBlock[8][8] = [MapBlock: Pos=(8, 8), LivingObject=None, MapBlockType=Sand]
+allMapBlock[8][9] = [MapBlock: Pos=(8, 9), LivingObject=None, MapBlockType=Sand]
+allMapBlock[9][0] = [MapBlock: Pos=(9, 0), LivingObject=None, MapBlockType=Sand]
+allMapBlock[9][1] = [MapBlock: Pos=(9, 1), LivingObject=None, MapBlockType=Sand]
+allMapBlock[9][2] = [MapBlock: Pos=(9, 2), LivingObject=None, MapBlockType=Sand]
+allMapBlock[9][3] = [MapBlock: Pos=(9, 3), LivingObject=None, MapBlockType=Sand]
+allMapBlock[9][4] = [MapBlock: Pos=(9, 4), LivingObject=None, MapBlockType=Sand]
+allMapBlock[9][5] = [MapBlock: Pos=(9, 5), LivingObject=None, MapBlockType=Sand]
+allMapBlock[9][6] = [MapBlock: Pos=(9, 6), LivingObject=None, MapBlockType=Sand]
+allMapBlock[9][7] = [MapBlock: Pos=(9, 7), LivingObject=None, MapBlockType=Sand]
+allMapBlock[9][8] = [MapBlock: Pos=(9, 8), LivingObject=None, MapBlockType=Sand]
+allMapBlock[9][9] = [MapBlock: Pos=(9, 9), LivingObject=People, MapBlockType=Sand]
+holePos:
+holePos[(7, 6)] = (2, 7)
+holePos[(2, 7)] = (7, 6)
+peopleCanMovePos:
+生物(People)的可移動位置:
+	pos[0] = (7, 9)
+	pos[1] = (8, 9)
+	pos[2] = (9, 7)
+	pos[3] = (9, 8)
+生物(Scarab)的可移動位置:
+	pos[0] = (1, 0)
+	pos[1] = (2, 0)
+	pos[2] = (0, 1)
+	pos[3] = (0, 2)
+生物(People)的數量 = 1
+生物(Scarab)的數量 = 1
+
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabTurn
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Loading complete...
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 0,0    End: 0,1   Real End 0,1   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (0, 1)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 9,9    End: 8,9   Real End 8,9   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (8, 9)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 0,1    End: 0,2   Real End 0,2   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (0, 2)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 8,9    End: 8,8   Real End 8,8   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (8, 8)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 0,2    End: 1,2   Real End 1,2   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (1, 2)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 8,8    End: 8,7   Real End 8,7   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (8, 7)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 1,2    End: 2,2   Real End 2,2   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (2, 2)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 8,7    End: 8,6   Real End 8,6   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (8, 6)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 2,2    End: 2,3   Real End 2,3   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (2, 3)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 8,6    End: 8,5   Real End 8,5   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (8, 5)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 2,3    End: 2,4   Real End 2,4   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (2, 4)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 8,5    End: 8,4   Real End 8,4   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (8, 4)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 2,4    End: 2,5   Real End 2,5   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (2, 5)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 8,4    End: 7,4   Real End 7,4   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (7, 4)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 2,5    End: 3,5   Real End 3,5   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (3, 5)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 7,4    End: 6,4   Real End 6,4   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (6, 4)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 3,5    End: 3,6   Real End 3,6   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (3, 6)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 6,4    End: 6,5   Real End 6,5   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (6, 5)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 3,6    End: 4,6   Real End 4,6   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (4, 6)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 6,5    End: 6,6   Real End 6,6   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (6, 6)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 4,6    End: 5,6   Real End 5,6   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (5, 6)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 7,4    End: 7,5   Real End 7,5   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (7, 5)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 6,6    End: 7,6   Real End 2,7   MoveType : Move
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ 淫內感染   infect nums. 0
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 8,6    End: 7,6   Real End 7,6   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (7, 6)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 5,6    End: 6,6   Real End 6,6   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (6, 6)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 8,7    End: 7,7   Real End 7,7   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (7, 7)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 6,6    End: 6,7   Real End 6,7   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (6, 7)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 8,5    End: 9,5   Real End 9,5   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (9, 5)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 2,3    End: 3,3   Real End 3,3   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (3, 3)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 8,7    End: 9,7   Real End 9,7   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (9, 7)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 3,6    End: 3,7   Real End 3,7   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (3, 7)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 6,4    End: 6,3   Real End 6,3   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (6, 3)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 3,3    End: 4,3   Real End 4,3   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (4, 3)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 8,4    End: 8,3   Real End 8,3   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (8, 3)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 6,7    End: 5,7   Real End 5,7   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (5, 7)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundHumanReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 8,8    End: 7,8   Real End 7,8   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (7, 8)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+PlayStatus: RoundScarabReadyMove
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+ Move Start : 6,7    End: 6,8   Real End 6,8   MoveType : Clone
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+MoveType.Clone (6, 8)
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Back
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
