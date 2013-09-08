@@ -164,7 +164,8 @@ public class GameControl{
 					UIManager.Instance.ShowCenterMsg("you can't do it !");                    return;                }
                 // todo: some click effect			if(_currentSelection != null)
 			    _currentSelection.Block.CreatureComponent.UnHighLight();
-                // ready click 2                if (NowHitter == Creature.People)
+
+                // ready click 2                if (NowHitter == Creature.People)
                 {                    _currentPlayStatus = PlayStatus.RoundHumanReadyMove;                }                else if (NowHitter == Creature.Scarab)                {
                     _currentPlayStatus = PlayStatus.RoundScarabReadyMove;
                 }
@@ -179,6 +180,9 @@ public class GameControl{
             case PlayStatus.RoundHumanReadyMove:
             case PlayStatus.RoundScarabReadyMove:
 			
+            //debug
+            //StartCoroutine(WaitReturnToMain()); //準備回到主畫面
+
 			if(_currentSelection != null)
 			    _currentSelection.Block.CreatureComponent.UnHighLight();
 			
@@ -294,6 +298,8 @@ public class GameControl{
                 {
                     UIManager.Instance.ShowResult();
                     _currentPlayStatus = PlayStatus.BattleResult; //本局結束
+
+                    StartCoroutine(WaitReturnToMain()); //準備回到主畫面
                 }
 
                 _currentChoosedBlock = null;
@@ -336,6 +342,19 @@ public class GameControl{
                 // todo
                 break;
         }
+    }
+
+    IEnumerator WaitReturnToMain()
+    {
+        DebugLog("WaitReturnToMain");
+        yield return new WaitForSeconds(5.0f);
+
+        _currentPlayStatus = PlayStatus.GameTitle;
+        _logic.ClearMap();
+
+        GameObject blockRoot = GameObject.Find("Blocks");
+        GameObject.DestroyImmediate(blockRoot);
+        TriggerGameEnter();
     }
 
     public void StartCoroutine(IEnumerator routine)

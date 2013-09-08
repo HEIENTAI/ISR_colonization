@@ -63,11 +63,43 @@ public class Map
 	
 	~Map()
 	{
+        allMapBlock.Clear();
 		allMapBlock = null;
 		holePos = null;
 		_creatureCanMovePos = null;
 		_creatureCount = null;
 	}
+
+    public void Clear()
+    {
+        // todo: 應該 check 移除掉 go 還有哪些相關聯的資料需要移除
+        if (allMapBlock != null)
+        {
+            for (int x = 0; x < allMapBlock.Count; ++x)
+            {
+                for (int y = 0; y < allMapBlock[x].Count; ++y)
+                {
+                    if (allMapBlock[x][y].CreatureComponent == null)
+                        continue;
+                    GameObject.DestroyImmediate(allMapBlock[x][y].CreatureComponent.gameObject);
+                }
+            }
+
+            allMapBlock.Clear();
+        }
+
+        // 清除生物 count
+        if (_creatureCount != null)
+        {
+            _creatureCount[Creature.Scarab] = 0;
+            _creatureCount[Creature.People] = 0;
+        }
+
+        allMapBlock = null;
+        if (holePos != null)
+         holePos.Clear();
+        holePos = null;
+    }
 	
 	public override string ToString ()
 	{
@@ -92,14 +124,7 @@ public class Map
 		sb.AppendFormat("peopleCanMovePos:\n");
 		foreach (Creature creature in _creatureCanMovePos.Keys)
 		{
-            if (creature != Creature.None)
-            {
-                sb.AppendFormat("生物({0})的可移動位置:\n", creature);
-                for (int index = 0; index < _creatureCanMovePos[creature].Count; ++index)
-                {
-                    sb.AppendFormat("	pos[{0}] = {1}\n", index, _creatureCanMovePos[creature][index].DataToString());
-                }
-            }
+            sb.AppendFormat(DebugCanMove(creature));
 		}
 		foreach(Creature creature in _creatureCount.Keys)
 		{
@@ -110,6 +135,20 @@ public class Map
 		}
 		return sb.ToString();
 	}
+
+    public string DebugCanMove(Creature creature)
+    {
+        StringBuilder sb = new StringBuilder();
+        if (creature != Creature.None)
+        {
+            sb.AppendFormat("生物({0})的可移動位置:\n", creature);
+            for (int index = 0; index < _creatureCanMovePos[creature].Count; ++index)
+            {
+                sb.AppendFormat("	pos[{0}] = {1}\n", index, _creatureCanMovePos[creature][index].DataToString());
+            }
+        }
+        return sb.ToString();
+    }
 
     /// <summary>
     /// 取得pos位置上面的生物
@@ -383,6 +422,7 @@ public class Map
 		{
 			++_creatureCount[allMapBlock[pos.x][pos.y].LivingObject];
 		}
+        RefreshCanWorkFrom(pos);
 		RefreshCanWorkTo(pos);
 	}
 	
@@ -397,6 +437,62 @@ public class Map
         SetCreature(pos, creature);
 		return true;
 	}
+
+
+    public void RecheckAllCanMove()
+    {
+        foreach (Creature creature in Enum.GetValues(typeof(Creature)))
+        {
+            if (creature != Creature.None)
+            {
+                _creatureCanMovePos[creature].Clear();
+            }
+        }
+
+        foreach (List<MapBlock> oneCol in allMapBlock)
+        {
+            foreach (MapBlock block in oneCol)
+            {
+                if (block.LivingObject == Creature.None)
+                {
+                    for (int diffx = -2; diffx <= 2; ++diffx)
+                    {
+                        if (diffx == 0) { continue; }
+                        IVector2 posCanMoveToThisPos =  new IVector2(block.Pos.x + diffx, block.Pos.y);
+                        if (CheckPosLegal(posCanMoveToThisPos))
+                        {
+                            if (block.CanMoveTo(Creature.People) && allMapBlock[posCanMoveToThisPos.x][posCanMoveToThisPos.y].LivingObject == Creature.People)
+                            {
+                                AddCanWorkPos(Creature.People, block.Pos);
+                            }
+                            else if (block.CanMoveTo(Creature.Scarab) && allMapBlock[posCanMoveToThisPos.x][posCanMoveToThisPos.y].LivingObject == Creature.Scarab)
+                            {
+                                AddCanWorkPos(Creature.Scarab, block.Pos);
+                            }
+                        }
+                    }
+                    for (int diffy = -2; diffy <= 2; ++diffy)
+                    {
+                        if (diffy == 0) { continue; }
+                        IVector2 posCanMoveToThisPos = new IVector2(block.Pos.x, block.Pos.y + diffy);
+                        if (CheckPosLegal(posCanMoveToThisPos))
+                        {
+                            if (block.CanMoveTo(Creature.People) && allMapBlock[posCanMoveToThisPos.x][posCanMoveToThisPos.y].LivingObject == Creature.People)
+                            {
+                                AddCanWorkPos(Creature.People, block.Pos);
+                            }
+                            else if (block.CanMoveTo(Creature.Scarab) && allMapBlock[posCanMoveToThisPos.x][posCanMoveToThisPos.y].LivingObject == Creature.Scarab)
+                            {
+                                AddCanWorkPos(Creature.Scarab, block.Pos);
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+    }
 }
 
 public class GameLogic
@@ -441,6 +537,11 @@ public class GameLogic
 		map.Initialize(allMapData, holeMapData);
 		Debug.Log(map.ToString());
 	}
+
+    public void ClearMap()
+    {
+        map.Clear();
+    }
 
     /// <summary>
     /// 雖然在這裡很奇怪, 取得 view + model reference 共用的地塊資料, MapBlock
@@ -494,6 +595,7 @@ public class GameLogic
 		if (creature == Creature.People)
 		{
 			map.SetCreature(realEnd, creature);
+            Debug.Log(string.Format(map.DebugCanMove(Creature.People)));
 			// 由於是合法移動,不是差一就二
 			if (Mathf.Abs(realEnd.x - start.x) == 1 || Mathf.Abs(realEnd.y - start.y) == 1) 
 			{
@@ -547,7 +649,9 @@ public class GameLogic
 				}
 			}
 		}
-		
+        // TODO: 優化能夠移動到的地點相關的處理
+        map.RecheckAllCanMove();
+        
 		return moveType;
 	}
 	/// <summary>
@@ -560,7 +664,8 @@ public class GameLogic
 	{
 		if (map.PeopleCount == 0 && map.ScarabCount > 0) {return BattleResult.ScarabWin;}
 		if (map.ScarabCount == 0 && map.PeopleCount > 0) {return BattleResult.PeopleWin;}
-		if (!map.HasAnyMove()) // 沒人可移動,比較單位數
+        
+        if (!map.HasAnyMove()) // 沒人可移動,比較單位數
 		{
 			if (map.PeopleCount > map.ScarabCount) {return BattleResult.PeopleWin;}
 			else if (map.PeopleCount < map.ScarabCount) {return BattleResult.ScarabWin;}

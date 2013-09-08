@@ -19,8 +19,8 @@ public class LivingObject : MonoBehaviour {
     {
 		if(bodyGo == null)
 			return;
-        bodyGo.transform.localScale = new Vector3(80, 80, 1);
-		bodyGo.renderer.sharedMaterial.shader = Shader.Find("Transparent/Diffuse");
+        bodyGo.transform.localScale = new Vector3(100, 100, 1);
+		//bodyGo.renderer.sharedMaterial.shader = Shader.Find("Transparent/Diffuse");
     }
 
     public void UnHighLight()
@@ -28,7 +28,7 @@ public class LivingObject : MonoBehaviour {
 		if(bodyGo == null)
 			return;
         bodyGo.transform.localScale = new Vector3(64, 64, 1);
-		bodyGo.renderer.sharedMaterial.shader = Shader.Find("Unlit/Transparent");
+		//bodyGo.renderer.sharedMaterial.shader = Shader.Find("Unlit/Transparent");
     }
 
     public virtual void MoveUp()
