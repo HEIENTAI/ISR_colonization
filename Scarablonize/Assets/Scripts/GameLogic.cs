@@ -4,99 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-public enum Creature
-{
-	None = 0, // 無
-	People = 1, // 人
-	Scarab = 2, // 甲蟲
-}
-
-public enum BlockType
-{
-	River = 0, // 河流
-	Sand = 1, // 沙漠
-	Pyramid = 2, // 金字塔
-	Hole = 3, // 蟲洞
-	House = 4, // 房子
-}
-
-public enum MoveType
-{
-	None,   // 無
-	Move,   // 移動    
-	Clone,  // 需要複製的移動
-}
-
-public enum BattleResult 
-{
-	PeopleWin, // 人類贏了
-	ScarabWin, // 甲蟲贏了
-	Draw, // 平手
-}
-
-public enum ControlMessage
-{
-	OK, // 可以移動
-	WrongCreature, // 控制的生物種類錯誤
-    NoneCreature, // 要控制的位置沒有生物
-    PositionError, // 位置錯誤
-}
-
 
 public static class CommonFunction
 {
-	public static string ToDataString(this IVector2 vec)
+	public static string DataToString(this IVector2 vec)
 	{
 		return string.Format("({0}, {1})", vec.x, vec.y);
 	}
 }
-
-public class MapBlock
-{
-	public IVector2 Pos {get;set;}
-	public Creature LivingObject {get;set;}
-	public BlockType MapBlockType {get;set;}
-	
-	
-	public MapBlock()
-	{
-		Pos = IVector2.zero;
-		LivingObject = Creature.None;
-		MapBlockType = BlockType.Sand;
-	}
-	
-    /// <summary>
-    /// creature可否移動到此格
-    /// </summary>
-    /// <param name="creature">要移動的生物</param>
-    /// <returns>能否移動</returns>
-	public bool CanMoveTo(Creature creature)
-	{
-		// 是否有生物在上頭
-		if (LivingObject != Creature.None) {return false;}
-		// 地形影響
-		if (MapBlockType == BlockType.River || MapBlockType == BlockType.Pyramid) {return false;}
-        // 蟲不得進入房子
-		if (creature == Creature.Scarab && MapBlockType == BlockType.House) {return false;}
-		return true;
-	}
-	
-	/// <summary>
-	/// 可否被感染成creature
-	/// </summary>
-	public bool CanInfect(Creature creature)
-	{
-		if (LivingObject == Creature.None || LivingObject == creature) {return false;}
-		// 人在房子內不被感染
-		if (LivingObject == Creature.People && MapBlockType == BlockType.House) {return false;}
-		return true;
-	}
-	
-	public override string ToString ()
-	{
-		return string.Format ("[MapBlock: Pos={0}, LivingObject={1}, MapBlockType={2}]", Pos.ToDataString(), LivingObject, MapBlockType);
-	}
-}	
 
 public class Map
 {
@@ -164,7 +79,7 @@ public class Map
 			sb.AppendFormat("holePos:\n");
 			foreach(KeyValuePair<IVector2, IVector2> oneHoldPos in holePos)
 			{
-				sb.AppendFormat("holePos[{0}] = {1}\n", oneHoldPos.Key.ToDataString(), oneHoldPos.Value.ToDataString());
+				sb.AppendFormat("holePos[{0}] = {1}\n", oneHoldPos.Key.DataToString(), oneHoldPos.Value.DataToString());
 			}
 		}
 		sb.AppendFormat("peopleCanMovePos:\n");
@@ -173,7 +88,7 @@ public class Map
 			sb.AppendFormat("生物({0})的可移動位置:\n", creature);
 			for(int index = 0; index <_creatureCanMovePos[creature].Count; ++index)
 			{
-				sb.AppendFormat("	pos[{0}] = {1}\n", index, _creatureCanMovePos[creature][index].ToDataString());
+				sb.AppendFormat("	pos[{0}] = {1}\n", index, _creatureCanMovePos[creature][index].DataToString());
 			}
 		}
 		foreach(Creature creature in _creatureCount.Keys)

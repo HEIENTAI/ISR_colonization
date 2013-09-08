@@ -122,16 +122,16 @@ public class MapGenerator {
                     block.Pos.y = j;
                     block.LivingObject = Creature.None;
                     block.MapBlockType = GetBlockType(graphicType);
-                    oneBlockRow.Add(block);
+                    block.BlockObject = GenerateBlock(graphicType, block.Pos.x, block.Pos.y);
 
-                    generateBlock(graphicType, block.Pos.x, block.Pos.y);	
+                    oneBlockRow.Add(block);
 				}
                 _generatedAllMapData.Add(oneBlockRow);
 			}
 		}
 	}
 
-    private static void generateBlock(BlockGraphicType graphicType, int x, int y)
+    private static GameObject GenerateBlock(BlockGraphicType graphicType, int x, int y)
 	{
 		GameObject newBlock = null;
 
@@ -173,6 +173,8 @@ public class MapGenerator {
             sprite.size = new Vector2(Tile_Width, Tile_Height);
 			newBlock.transform.parent = root.transform;
 		}
+
+        return newBlock;
 	}
 	
 	private static GameObject generateHuman(Vector2 pos)
