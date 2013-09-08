@@ -1,0 +1,1 @@
+﻿using UnityEngine;using System.Collections;public class DelayDestroy : MonoBehaviour{	public float DelayTime = 2f;	// Use this for initialization	void Start ()	{		Destroy(gameObject, DelayTime);	}		// Update is called once per frame	void Update () {		}}
