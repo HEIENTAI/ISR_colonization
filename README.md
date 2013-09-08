@@ -4,16 +4,17 @@ ISR_colonization
 Indie Speed Run , yes.
 
 
-[FF0000]SH[-]
+Team : Hello, World.
+SH
 programmer, captain
 
-[FF0000]Peter Lee[-]
+Peter Lee
 programmer, art
 
-[FF0000]SimonLin[-]
+SimonLin
 programmer
 
-[FF0000]feles[-]
+feles
 programmer
 
 all music are from www.jamendo.com
