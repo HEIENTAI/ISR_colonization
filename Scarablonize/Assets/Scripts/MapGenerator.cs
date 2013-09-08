@@ -189,6 +189,12 @@ public class MapGenerator {
     public static void HumanInfectBlock(MapBlock block)
     {
         LivingObject living = null;
+
+        if (block.CreatureComponent != null)
+        {
+            if(block.CreatureComponent.gameObject != null)
+                GameObject.DestroyImmediate(block.CreatureComponent.gameObject);
+        }
         GameObject go = generateHuman(new Vector2(block.Pos.x, block.Pos.y), out living);
         block.CreatureComponent = living; //反設定, 資料更新
     }
@@ -199,8 +205,63 @@ public class MapGenerator {
     public static void ScarabInfectBlock(MapBlock block)
     {
         LivingObject living = null;
+
+        if (block.CreatureComponent != null)
+        {
+            if (block.CreatureComponent.gameObject != null)
+                GameObject.DestroyImmediate(block.CreatureComponent.gameObject);
+        }
         GameObject go = generateScarab(new Vector2(block.Pos.x, block.Pos.y), out living);
         block.CreatureComponent = living; //反設定, 資料更新
+    }
+
+    /// <summary>
+    /// 移動一個單位, 並且改變資料
+    /// </summary>
+    public static void CopyMoveUnit(MapBlock original, MapBlock dest)
+    {
+        if (dest.LivingObject == Creature.People)
+        {
+            HumanInfectBlock(dest);
+        }
+        else if (dest.LivingObject == Creature.Scarab)
+        {
+            ScarabInfectBlock(dest);
+        }
+
+        GameObject.DestroyImmediate(original.CreatureComponent.gameObject);
+    }
+
+    /// <summary>
+    /// 有反索引 block 資料 問題, 先不要使用
+    /// </summary>
+    public static void MoveUnit(MapBlock original, MapBlock dest)
+    {
+        if (original.CreatureComponent == null)
+        {
+            GameControl.Instance.DebugLog(" original.CreatureComponent == null");
+            return;
+        }
+        if (original.CreatureComponent.gameObject == null)
+        {
+            GameControl.Instance.DebugLog(" original.CreatureComponent.gameObject == null");
+            return;
+        }
+
+        float xPos = offset_x / 2f + Tile_Width * dest.Pos.x;
+        float yPos = offset_y / 2f - Tile_Height * dest.Pos.y;
+
+        //移動資料到新 block
+        dest.CreatureComponent = original.CreatureComponent;
+        dest.BlockData.Block.LivingObject = original.BlockData.Block.LivingObject;
+
+        //清除 old block
+        original.CreatureComponent.gameObject.transform.position = new Vector3(xPos, yPos, -2);
+        original.CreatureComponent.gameObject.transform.localScale = new Vector3(Tile_Width, Tile_Height, 1);
+        original.BlockData.Block.LivingObject = Creature.None; //原本的位置變成是 空的
+        original.CreatureComponent = null; //原本的位置 creature component 索引變成是 空的
+
+        //todo : 要撥 move 特效加這裡
     }
 
     private static GameObject generateHuman(Vector2 pos, out LivingObject living)

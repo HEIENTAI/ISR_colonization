@@ -150,6 +150,7 @@ public class GameControl{
     {
         switch(_currentPlayStatus)
         {
+            // 開始選擇要控制哪個 UNIT
             case PlayStatus.RoundHumanTurn:
             case PlayStatus.RoundScarabTurn:
                 if (NowHitter == Creature.None)
@@ -168,8 +169,25 @@ public class GameControl{
 
                 DebugLog("PlayStatus: " + _currentPlayStatus.ToString());
                 break;
+
+            // 開始選擇要移動到哪裡
             case PlayStatus.RoundHumanReadyMove:
             case PlayStatus.RoundScarabReadyMove:
+
+                //檢查是否為重新選取 unit
+                if ((data.Block.LivingObject == Creature.People ) && (_currentPlayStatus == PlayStatus.RoundHumanReadyMove))
+                {
+                    _currentPlayStatus = PlayStatus.RoundHumanTurn; // 回到選取狀態
+                    MapTileClick(data);
+                    return;
+                }
+                else if ((data.Block.LivingObject == Creature.Scarab) && (_currentPlayStatus == PlayStatus.RoundScarabReadyMove))
+                {
+                    _currentPlayStatus = PlayStatus.RoundScarabTurn; // 回到選取狀態
+                    MapTileClick(data);
+                    return;
+                }
+
                 bool legal = _logic.IsLegalMove(_currentChoosedBlock.Block.Pos, data.Block.Pos);
                 if (legal == false)
                 {
@@ -187,30 +205,53 @@ public class GameControl{
 
                 if (moveType == MoveType.Move)
                 {
+                    //移動場景物件
+                    MapGenerator.CopyMoveUnit(_currentChoosedBlock.Block, data.Block);
+
                     for (int i = 0; i < infectPositions.Count; i++)
                     {
                         MapBlock block = _logic.GetMapBlock(infectPositions[i]);
 
                         //人類
                         if (_lastPlayStatus == PlayStatus.RoundHumanReadyMove)
+                        {
                             MapGenerator.HumanInfectBlock(block);
+                        }
                         //蟲類
                         else
+                        {
                             MapGenerator.ScarabInfectBlock(block);
+                        }
                     }
 
-                    DebugLog(" infect nums. " + infectPositions.Count.ToString());
+                    DebugLog(" 淫內感染   infect nums. " + infectPositions.Count.ToString());
                 }
                 else if (moveType == MoveType.Clone)
                 {
-                    MapBlock block = _logic.GetMapBlock(realEnd);
+                    MapBlock destBlock = _logic.GetMapBlock(realEnd);
                     //人類
                     if (_lastPlayStatus == PlayStatus.RoundHumanReadyMove)
-                        MapGenerator.HumanInfectBlock(block);
+                        MapGenerator.HumanInfectBlock(destBlock);
                     //蟲類
                     else
-                        MapGenerator.ScarabInfectBlock(block);
-                    DebugLog("MoveType.Clone " + realEnd.ToString());
+                        MapGenerator.ScarabInfectBlock(destBlock);
+
+                    for (int i = 0; i < infectPositions.Count; i++)
+                    {
+                        MapBlock blockClone = _logic.GetMapBlock(infectPositions[i]);
+
+                        //人類
+                        if (_lastPlayStatus == PlayStatus.RoundHumanReadyMove)
+                        {
+                            MapGenerator.HumanInfectBlock(blockClone);
+                        }
+                        //蟲類
+                        else
+                        {
+                            MapGenerator.ScarabInfectBlock(blockClone);
+                        }
+                    }
+                    DebugLog("MoveType.Clone " + realEnd.DataToString());
                 }
                 else
                 {
@@ -234,6 +275,8 @@ public class GameControl{
                     UIManager.Instance.ShowResult();
                     _currentPlayStatus = PlayStatus.BattleResult; //本局結束
                 }
+
+                _currentChoosedBlock = null;
 
                 break;
 
