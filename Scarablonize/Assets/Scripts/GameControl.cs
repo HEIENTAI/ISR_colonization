@@ -206,7 +206,8 @@ public class GameControl{
                 if (moveType == MoveType.Move)
                 {
                     //移動場景物件
-                    MapGenerator.CopyMoveUnit(_currentChoosedBlock.Block, data.Block);
+                    MapBlock destBlockMove = _logic.GetMapBlock(realEnd);
+                    MapGenerator.CopyMoveUnit(_currentChoosedBlock.Block, destBlockMove);
 
                     for (int i = 0; i < infectPositions.Count; i++)
                     {
