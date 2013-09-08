@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -92,8 +92,7 @@ public class MapGenerator {
 			Vector2 humanPos = new Vector2(float.Parse(humanInitPos[0]),float.Parse(humanInitPos[1]));
             MapBlockManager.Human =   generateHuman(humanPos);
             MapBlockManager.Scarab = generateScarab(scPos);
-
-            BlockGraphicType graphicType;
+			BlockGraphicType graphicType;
             MapBlock block = null;
             List<MapBlock> oneBlockRow = null;
 			for(int i=0; i< lines.Length-extraLineCount; i++)
@@ -113,9 +112,15 @@ public class MapGenerator {
                     block.BlockObject = GenerateBlock(graphicType, block.Pos.x, block.Pos.y);
 
                     if ((block.Pos.x == scPos.x) && (block.Pos.y == scPos.y))
-                        block.LivingObject = Creature.Scarab;
+					{
+						block.LivingObject = Creature.Scarab;
+						generateScarab(scPos);
+					}
                     else if ((block.Pos.x == humanPos.x) && (block.Pos.y == humanPos.y))
+					{
                         block.LivingObject = Creature.People;
+						generateHuman(humanPos);
+					}
                     else
                         block.LivingObject = Creature.None;
 
@@ -209,4 +214,5 @@ public class MapGenerator {
     {
         get { return null; } // todo
     }
+
 }

@@ -154,8 +154,7 @@ public class GameControl{
                     return;
                 }
 
-                IVector2 vec = new IVector2();
-                vec.x = data.Column;
+				UIManager.Instance.ScarabCount = _logic.ScarabCount;				UIManager.Instance.HumanCount = _logic.PeopleCount;                IVector2 vec = new IVector2();                vec.x = data.Column;                vec.y = data.Row;                ControlMessage controlMsg = _logic.CanControl(vec, NowHitter);                //if (controlMsg == ControlMessage.OK)                //{                //    UIManager.Instance.ShowCenterMsg(data.Block.MapBlockType.ToString());                //}                // click 2                //_logic.IsLegalMove();                //_logic.Move();                GameControl.Instance.DebugLog(" controlMsg " + controlMsg.ToString() );                //UIManager.Instance.ShowCenterMsg(data.Block.MapBlockType.ToString());                //RoundScarabReadyMove<<<<<<< .mine
                 vec.y = data.Row;
                 ControlMessage controlMsg = _logic.CanControl(vec, NowHitter);
 
@@ -165,13 +164,6 @@ public class GameControl{
                 //}
 
                 // click 2
-                //_logic.IsLegalMove();
-                //_logic.Move();
-
-                GameControl.Instance.DebugLog(" controlMsg " + controlMsg.ToString() );
-
-                //UIManager.Instance.ShowCenterMsg(data.Block.MapBlockType.ToString());
-                //RoundScarabReadyMove
 
                 break;
             default:
