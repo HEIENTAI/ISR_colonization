@@ -5,7 +5,7 @@ using System.Collections;
 public class GameControl{
     private static GameControl _instance;
     private GameMain _main;
-    private Map _mapData;
+    private GameLogic _mapData;
     private PlayStatus _currentPlayStatus;
 	private PlayStatus _lastPlayStatus;
     private PlayMode _currentPlayMode;
@@ -21,7 +21,7 @@ public class GameControl{
     {
         // GUIManager.ShowGameTitle
         _main = main;
-        _mapData = new Map();
+        _mapData = new GameLogic();
 
         TriggerGameEnter();
     }
@@ -116,7 +116,7 @@ public class GameControl{
 
         DebugLog("蟲族先攻");
 
-        _mapData.Initialize(MapGenerator.GeneratedData, MapGenerator.GeneratedHoleData);
+        _mapData.InitialMap(MapGenerator.GeneratedData, MapGenerator.GeneratedHoleData);
         _currentPlayStatus = PlayStatus.RoundScarabTurn; //蟲族先攻
     }
 

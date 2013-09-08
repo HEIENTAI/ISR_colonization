@@ -41,6 +41,15 @@ public enum ControlMessage
     PositionError, // 位置錯誤
 }
 
+
+public static class CommonFunction
+{
+	public static string ToDataString(this IVector2 vec)
+	{
+		return string.Format("({0}, {1})", vec.x, vec.y);
+	}
+}
+
 public class MapBlock
 {
 	public IVector2 Pos {get;set;}
@@ -84,15 +93,12 @@ public class MapBlock
 	
 	public override string ToString ()
 	{
-		return string.Format ("[MapBlock: Pos={0}, LivingObject={1}, MapBlockType={2}]", Pos, LivingObject, MapBlockType);
+		return string.Format ("[MapBlock: Pos={0}, LivingObject={1}, MapBlockType={2}]", Pos.ToDataString(), LivingObject, MapBlockType);
 	}
 }	
 
 public class Map
 {
-	const int SIZE_X = 10;
-	const int SIZE_Y = 10;
-	
 	List<List<MapBlock>> allMapBlock;
 	
 	Dictionary<IVector2, IVector2> holePos;
@@ -102,10 +108,8 @@ public class Map
 	 // 生物數量
 	Dictionary<Creature, int> _creatureCount;
 	
-//	private int _peopleCount;
 	public int PeopleCount
 	{
-//		get {return _peopleCount;}
 		get 
 		{
 			if (_creatureCount == null || !_creatureCount.ContainsKey(Creature.People)) {return 0;}
@@ -113,10 +117,8 @@ public class Map
 		}
 	}
 	
-//	private int _scarabCount;
 	public int ScarabCount
 	{
-//		get {return _scarabCount;}
 		get
 		{
 			if (_creatureCount == null || !_creatureCount.ContainsKey(Creature.Scarab)) {return 0;}
@@ -134,8 +136,6 @@ public class Map
 		_creatureCount = new Dictionary<Creature, int>();
 		_creatureCount.Add(Creature.People, 0);
 		_creatureCount.Add(Creature.Scarab, 0);
-//		_peopleCount = 0;
-//		_scarabCount = 0;
 	}
 	
 	~Map()
@@ -151,41 +151,35 @@ public class Map
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.AppendFormat("Map : allMapBlock\n");
-		int x = 0;
-		int y = 0;
-		foreach(List<MapBlock> colMapBlock in allMapBlock)
+		for (int x = 0; x < allMapBlock.Count; ++x)
 		{
-			foreach(MapBlock oneMapBlock  in colMapBlock)
+			for (int y = 0; y <allMapBlock[x].Count; ++y)
 			{
 				sb.AppendFormat("allMapBlock[{0}][{1}] = {2}\n", x, y, allMapBlock[x][y]);
-				++y;
 			}
-			++x;
 		}
-		sb.AppendFormat("holePos:\n");
-		foreach(IVector2 startHoldPos in holePos.Keys)
+		if (holePos != null)
 		{
-			sb.AppendFormat("holePos[{0}] = {1}\n", startHoldPos, holePos[startHoldPos]);
+			sb.AppendFormat("holePos:\n");
+			foreach(KeyValuePair<IVector2, IVector2> oneHoldPos in holePos)
+			{
+				sb.AppendFormat("holePos[{0}] = {1}\n", oneHoldPos.Key.ToDataString(), oneHoldPos.Value.ToDataString());
+			}
 		}
 		sb.AppendFormat("peopleCanMovePos:\n");
-		int index = 0;
-		foreach(IVector2 peopleOneMovePos in peopleCanMovePos)
+		for (int index = 0; index < peopleCanMovePos.Count; ++index)
 		{
-			sb.AppendFormat("peopleCanMovePos[{0}] = {1}\n", index, peopleOneMovePos);
-			++index;
+			sb.AppendFormat("peopleCanMovePos[{0}] = {1}\n", index, peopleCanMovePos[index].ToDataString());
 		}
-		index = 0;
 		sb.AppendFormat("scarabCanMovePos:\n");
-		foreach(IVector2 scarabOneMovePos in scarabCanMovePos)
+		for (int index = 0; index < scarabCanMovePos.Count; ++index)
 		{
-			sb.AppendFormat("scarabCanMovePos[{0}] = {1}\n", index, scarabCanMovePos);
-			++index;
+			sb.AppendFormat("scarabCanMovePos[{0}] = {1}\n", index, scarabCanMovePos[index].ToDataString());
 		}
 		foreach(Creature creature in _creatureCount.Keys)
 		{
-			sb.AppendFormat("生物({0})的數量 = {1}", creature, _creatureCount[creature]);  
+			sb.AppendFormat("生物({0})的數量 = {1}\n", creature, _creatureCount[creature]);  
 		}
-//		sb.AppendFormat("_peopleCount = {0} _scarabCount = {1}", _peopleCount,_scarabCount);
 		return sb.ToString();
 	}
 
@@ -215,6 +209,7 @@ public class Map
 				}
 			}
 		}
+		
 	}
 	
 	/// <summary>
@@ -366,7 +361,7 @@ public class Map
 		transportPos = pos.Clone();
 		if (!CheckPosLegal(pos)) {return false;}
 		if (creature != Creature.Scarab || allMapBlock[pos.x][pos.y].MapBlockType != BlockType.Hole) {return false;}
-		if (!holePos.ContainsKey(pos)) {return false;}
+		if (holePos == null || !holePos.ContainsKey(pos)) {return false;}
 		else
 		{
 			transportPos = holePos[pos].Clone();
@@ -465,6 +460,7 @@ public class GameLogic
 	public void InitialMap(List<List<MapBlock>> allMapData, Dictionary<IVector2, IVector2> holeMapData)
 	{
 		map.Initialize(allMapData, holeMapData);
+		Debug.Log(map.ToString());
 	}
 
     /// <summary>
