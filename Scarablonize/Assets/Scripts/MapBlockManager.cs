@@ -11,6 +11,14 @@ public class MapBlock
     // Visual about
     private GameObject _blockObject = null;
     private MapBlockData _blockData = null;
+
+    public MapBlock()
+    {
+        Pos = IVector2.zero;
+        LivingObject = Creature.None;
+        MapBlockType = BlockType.Sand;
+    }
+
     public GameObject BlockObject {
         get
         {
@@ -75,13 +83,6 @@ public class MapBlock
         }
     }
 
-    public MapBlock()
-    {
-        Pos = IVector2.zero;
-        LivingObject = Creature.None;
-        MapBlockType = BlockType.Sand;
-    }
-
     /// <summary>
     /// creature可否移動到此格
     /// </summary>
@@ -114,6 +115,9 @@ public class MapBlock
         return string.Format("[MapBlock: Pos={0}, LivingObject={1}, MapBlockType={2}]", Pos, LivingObject, MapBlockType);
     }
 
+    /// <summary>
+    /// 取得地塊物件的 gameobject name
+    /// </summary>
     public string Name
     {
         get { return BlockObject.name; }

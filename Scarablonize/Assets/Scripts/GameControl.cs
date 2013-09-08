@@ -125,6 +125,21 @@ public class GameControl{
         _currentPlayStatus = PlayStatus.RoundScarabTurn; //蟲族先攻
     }
 
+    /// <summary>
+    /// 現在上場的打擊者
+    /// </summary>
+    public Creature NowHitter
+    {
+        get
+        {
+            if(_currentPlayStatus == PlayStatus.RoundHumanTurn)
+                return Creature.People;
+            else if(_currentPlayStatus != PlayStatus.RoundScarabTurn)
+                return Creature.Scarab;
+            else
+                return Creature.None;
+        }
+    }
     //------------  Map 控制相關 -------------------
     // player click a tile in Map, Top Left is 0, 0
     public void MapTileClick(float x, float y)
@@ -133,8 +148,7 @@ public class GameControl{
         {
             case PlayStatus.RoundHumanTurn:
             case PlayStatus.RoundScarabTurn:
-            if ((_currentPlayStatus != PlayStatus.RoundHumanTurn) &&
-                    (_currentPlayStatus != PlayStatus.RoundScarabTurn))
+                if (NowHitter == Creature.None)
                 {
                     DebugLog(" Status error : not round turn status. " + _currentPlayStatus.ToString() );
                     return;
