@@ -475,7 +475,7 @@ public class GameLogic
 	/// <param name="infectPositions">感染的座標範圍</param>
 	public MoveType Move(IVector2 start, IVector2 end, out IVector2 realEnd, out List<IVector2> infectPositions)
 	{
-		MoveType moveType = MoveType.None;
+		MoveType moveType = MoveType.Move;
 		realEnd = end.Clone();
 		infectPositions = new List<IVector2>();
         Creature creature = map.GetCreature(start); // 取得要移動的生物

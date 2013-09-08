@@ -120,7 +120,7 @@ public class MapBlock
 
     public override string ToString()
     {
-        return string.Format("[MapBlock: Pos={0}, LivingObject={1}, MapBlockType={2}]", Pos, LivingObject, MapBlockType);
+        return string.Format("[MapBlock: Pos={0}, LivingObject={1}, MapBlockType={2}]", Pos.DataToString(), LivingObject, MapBlockType);
     }
 
     /// <summary>
