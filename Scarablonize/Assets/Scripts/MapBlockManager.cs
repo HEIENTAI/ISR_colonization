@@ -77,6 +77,7 @@ public class MapBlock
                 _blockData = _blockObject.AddComponent<MapBlockData>();
                 _blockData.Column = (ushort) Pos.x;
                 _blockData.Row = (ushort) Pos.y;
+                _blockData.Block = this;
             }
 
             return _blockData;
@@ -128,6 +129,8 @@ public class MapBlock
 /// Map tiles manage
 /// </summary>
 public class MapBlockManager {
+    public static GameObject Human = null;
+    public static GameObject Scarab = null;
 
     public MapBlockManager()
     {
@@ -140,7 +143,7 @@ public class MapBlockManager {
         {
             MapBlockData data = GetBlockData(owner);
             //GameControl.Instance.DebugLog(" data : " + data.Row.ToString() + "   " + data.Column.ToString());
-            GameControl.Instance.MapTileClick(data.Column, data.Row);
+            GameControl.Instance.MapTileClick(data);
         }
     }
 

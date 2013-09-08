@@ -90,7 +90,9 @@ public class MapGenerator {
 			string[] humanInitPos = lines[lines.Length-extraLineCount+1].Split(tokenDelimiter, StringSplitOptions.None);
 			Vector2 scPos = new Vector2( float.Parse(scarabInitPos[0]),float.Parse(scarabInitPos[1]));
 			Vector2 humanPos = new Vector2(float.Parse(humanInitPos[0]),float.Parse(humanInitPos[1]));
-			
+            MapBlockManager.Human =   generateHuman(humanPos);
+            MapBlockManager.Scarab = generateScarab(scPos);
+
             BlockGraphicType graphicType;
             MapBlock block = null;
             List<MapBlock> oneBlockRow = null;
@@ -116,8 +118,6 @@ public class MapGenerator {
                         block.LivingObject = Creature.People;
                     else
                         block.LivingObject = Creature.None;
-
-                    block.LivingObject = Creature.None;
 
                     oneBlockRow.Add(block);
 				}

@@ -134,7 +134,7 @@ public class GameControl{
         {
             if(_currentPlayStatus == PlayStatus.RoundHumanTurn)
                 return Creature.People;
-            else if(_currentPlayStatus != PlayStatus.RoundScarabTurn)
+            else if(_currentPlayStatus == PlayStatus.RoundScarabTurn)
                 return Creature.Scarab;
             else
                 return Creature.None;
@@ -142,7 +142,7 @@ public class GameControl{
     }
     //------------  Map 控制相關 -------------------
     // player click a tile in Map, Top Left is 0, 0
-    public void MapTileClick(float x, float y)
+    public void MapTileClick(MapBlockData data)
     {
         switch(_currentPlayStatus)
         {
@@ -154,9 +154,24 @@ public class GameControl{
                     return;
                 }
 
-                //_logic.CanControl();
+                IVector2 vec = new IVector2();
+                vec.x = data.Column;
+                vec.y = data.Row;
+                ControlMessage controlMsg = _logic.CanControl(vec, NowHitter);
+
+                //if (controlMsg == ControlMessage.OK)
+                //{
+                //    UIManager.Instance.ShowCenterMsg(data.Block.MapBlockType.ToString());
+                //}
+
+                // click 2
                 //_logic.IsLegalMove();
                 //_logic.Move();
+
+                GameControl.Instance.DebugLog(" controlMsg " + controlMsg.ToString() );
+
+                //UIManager.Instance.ShowCenterMsg(data.Block.MapBlockType.ToString());
+                //RoundScarabReadyMove
 
                 break;
             default:
