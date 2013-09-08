@@ -93,7 +93,10 @@ public class Map
 		}
 		foreach(Creature creature in _creatureCount.Keys)
 		{
-			sb.AppendFormat("生物({0})的數量 = {1}\n", creature, _creatureCount[creature]);  
+			if (creature != Creature.None)
+			{
+				sb.AppendFormat("生物({0})的數量 = {1}\n", creature, _creatureCount[creature]);  
+			}
 		}
 		return sb.ToString();
 	}
@@ -120,7 +123,8 @@ public class Map
 			{
 				if (oneBlockData.LivingObject != Creature.None)
 				{
-					SetCreature(oneBlockData.Pos, oneBlockData.LivingObject);
+					++_creatureCount[oneBlockData.LivingObject];
+					RefreshCanWorkFrom(oneBlockData.Pos);
 				}
 			}
 		}
@@ -162,10 +166,48 @@ public class Map
 	}
 	
 	/// <summary>
+	/// 更新某位置能夠可以移動的地方
+	/// 注意:得先更新該格資訊
+	/// </summary>
+	void RefreshCanWorkFrom(IVector2 pos)
+	{
+		if (!CheckPosLegal(pos)) {return;}
+		if (allMapBlock[pos.x][pos.y].LivingObject != Creature.None)
+		{
+			// 處理此位置移動出去的部分
+			for (int diffX = -2; diffX <= 2; ++diffX)
+			{
+				if (diffX == 0) {continue;}
+				IVector2 targetPos = new IVector2(pos.x + diffX, pos.y);
+				if (CheckPosLegal(targetPos))
+				{	// 若目標位置可移動過去
+					if (allMapBlock[targetPos.x][targetPos.y].CanMoveTo(allMapBlock[pos.x][pos.y].LivingObject))
+					{
+						AddCanWorkPos(allMapBlock[pos.x][pos.y].LivingObject, targetPos);
+					}
+				}
+			}
+			for (int diffY = -2; diffY <= 2; ++diffY)
+			{
+				if (diffY == 0) {continue;}
+				IVector2 targetPos = new IVector2(pos.x, pos.y + diffY);
+				if (CheckPosLegal(targetPos))
+				{	// 若目標位置可移動過去
+					if (allMapBlock[targetPos.x][targetPos.y].CanMoveTo(allMapBlock[pos.x][pos.y].LivingObject))
+					{
+						AddCanWorkPos(allMapBlock[pos.x][pos.y].LivingObject, targetPos);
+					}
+				}
+			}
+		}
+	}
+	
+	
+	/// <summary>
 	/// 依據某格的變化,更新可移動區域,
 	/// 注意:得先更新該格資訊
 	/// </summary>
-	void RefreshCanWork(IVector2 pos)
+	void RefreshCanWorkTo(IVector2 pos)
 	{
 		if (!CheckPosLegal(pos)) {return;}
 		if (allMapBlock[pos.x][pos.y].LivingObject == Creature.None)
@@ -312,7 +354,7 @@ public class Map
 		{
 			++_creatureCount[allMapBlock[pos.x][pos.y].LivingObject];
 		}
-		RefreshCanWork(pos);
+		RefreshCanWorkTo(pos);
 	}
 	
 	/// <summary>
