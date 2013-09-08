@@ -133,6 +133,21 @@ public class Map
 		}
 		
 	}
+
+    public MapBlock GetMapBlock(IVector2 pos)
+    {
+        for (int x = 0; x < allMapBlock.Count; ++x)
+        {
+            for (int y = 0; y < allMapBlock[x].Count; ++y)
+            {
+                if((allMapBlock[x][y].Pos.x == pos.x) && (allMapBlock[x][y].Pos.y == pos.y)) //todo: 以後可以改成 x + y 當 key
+                {
+                    return allMapBlock[x][y];
+                }
+            }
+        }
+        return null;
+    }
 	
 	/// <summary>
 	/// 將creature的可移動位置增加pos(不做pos檢查)
@@ -415,6 +430,14 @@ public class GameLogic
 		map.Initialize(allMapData, holeMapData);
 		Debug.Log(map.ToString());
 	}
+
+    /// <summary>
+    /// 雖然在這裡很奇怪, 取得 view + model reference 共用的地塊資料, MapBlock
+    /// </summary>
+    public MapBlock GetMapBlock(IVector2 pos)
+    {
+        return map.GetMapBlock(pos);
+    }
 
     /// <summary>
     /// 檢查在creature回合時，可否控制pos位置的移動 （滑鼠點第一下的檢查）

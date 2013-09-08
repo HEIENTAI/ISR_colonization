@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -178,8 +178,28 @@ public class MapGenerator {
 
         return newBlock;
 	}
-	
-	private static GameObject generateHuman(Vector2 pos, out LivingObject living)
+
+    /// <summary>
+    /// 人類感染此區域
+    /// </summary>
+    public static void HumanInfectBlock(MapBlock block)
+    {
+        LivingObject living = null;
+        GameObject go = generateHuman(new Vector2(block.Pos.x, block.Pos.y), out living);
+        block.CreatureComponent = living; //反設定, 資料更新
+    }
+
+    /// <summary>
+    /// 蟲類感染此區域
+    /// </summary>
+    public static void ScarabInfectBlock(MapBlock block)
+    {
+        LivingObject living = null;
+        GameObject go = generateScarab(new Vector2(block.Pos.x, block.Pos.y), out living);
+        block.CreatureComponent = living; //反設定, 資料更新
+    }
+
+    private static GameObject generateHuman(Vector2 pos, out LivingObject living)
 	{
 		float xPos = offset_x/2f + Tile_Width*pos.x;
 		float yPos = offset_y/2f - Tile_Height*pos.y;

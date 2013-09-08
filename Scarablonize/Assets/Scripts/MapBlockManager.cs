@@ -10,7 +10,7 @@ public class MapBlock
 
     // Visual about
     private GameObject _blockObject = null;
-    private MapBlockData _blockData = null;
+    private MapBlockData _blockData = null; // monobehavior , for add component
     private LivingObject _creatureComponent = null;
 	
     public MapBlock()
