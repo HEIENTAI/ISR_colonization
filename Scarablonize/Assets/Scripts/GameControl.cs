@@ -13,6 +13,7 @@ public class GameControl{
     private ushort _currentChapterID = 0; // 0 = no chapter
 	private bool _statusChanged;
     private MapBlockData _currentChoosedBlock = null; // null 表示現在沒有選取 操作中 block 
+	private MapBlockData _currentSelection = null;
 
 	public delegate void OnStatusChanged(PlayStatus lastStatus, PlayStatus currentStatus);
 	public OnStatusChanged NotifyStatusChanged;
@@ -161,11 +162,15 @@ public class GameControl{
 
 				UIManager.Instance.ScarabCount = _logic.ScarabCount;				UIManager.Instance.HumanCount = _logic.PeopleCount;                IVector2 vec = new IVector2();                vec.x = data.Column;                vec.y = data.Row;                ControlMessage controlMsg = _logic.CanControl(vec, NowHitter);                if (controlMsg != ControlMessage.OK)                {
 					UIManager.Instance.ShowCenterMsg("you can't do it !");                    return;                }
-                // todo: some click effect                // ready click 2                if (NowHitter == Creature.People)
+                // todo: some click effect			if(_currentSelection != null)
+			    _currentSelection.Block.CreatureComponent.UnHighLight();
+                // ready click 2                if (NowHitter == Creature.People)
                 {                    _currentPlayStatus = PlayStatus.RoundHumanReadyMove;                }                else if (NowHitter == Creature.Scarab)                {
                     _currentPlayStatus = PlayStatus.RoundScarabReadyMove;
                 }
                 _currentChoosedBlock = data;
+				_currentSelection = _currentChoosedBlock;
+			    _currentSelection.Block.CreatureComponent.HighLight();
 
                 DebugLog("PlayStatus: " + _currentPlayStatus.ToString());
                 break;
@@ -173,7 +178,10 @@ public class GameControl{
             // 開始選擇要移動到哪裡
             case PlayStatus.RoundHumanReadyMove:
             case PlayStatus.RoundScarabReadyMove:
-
+			
+			if(_currentSelection != null)
+			    _currentSelection.Block.CreatureComponent.UnHighLight();
+			
                 //檢查是否為重新選取 unit
                 if ((data.Block.LivingObject == Creature.People ) && (_currentPlayStatus == PlayStatus.RoundHumanReadyMove))
                 {
@@ -225,6 +233,11 @@ public class GameControl{
                         }
                     }
 
+                    if(infectPositions.Count > 0)
+                        UIManager.Instance.ShowCenterMsg(" Infect !!! ");
+                    else
+                        UIManager.Instance.ShowCenterMsg(" Move !");
+
                     DebugLog(" 淫內感染   infect nums. " + infectPositions.Count.ToString());
                 }
                 else if (moveType == MoveType.Clone)
@@ -252,6 +265,12 @@ public class GameControl{
                             MapGenerator.ScarabInfectBlock(blockClone);
                         }
                     }
+
+                    if (infectPositions.Count > 0)
+                        UIManager.Instance.ShowCenterMsg(" Clone and Infect !!! ");
+                    else
+                        UIManager.Instance.ShowCenterMsg(" Clone ! ");
+
                     DebugLog("MoveType.Clone " + realEnd.DataToString());
                 }
                 else
