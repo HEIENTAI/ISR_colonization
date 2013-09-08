@@ -111,7 +111,7 @@ public class Map
     /// <returns>該位置上的生物種類</returns>
     public Creature GetCreature(IVector2 pos)
     {
-        if (CheckPosLegal(pos)) { return Creature.None; }
+        if (!CheckPosLegal(pos)) { return Creature.None; }
         return allMapBlock[pos.x][pos.y].LivingObject;
     }
 
@@ -283,7 +283,7 @@ public class Map
 	/// </summary>
 	bool CheckPosLegal(IVector2 pos)
 	{
-		if (pos.x < 0 || allMapBlock.Count <= pos.x) {return false;}
+        if (pos.x < 0 || allMapBlock.Count <= pos.x) { return false; }
 		if (pos.y < 0 || allMapBlock[pos.x].Count <= pos.y) {return false;}
 		return true;
 	}
