@@ -85,11 +85,14 @@ public class Map
 		sb.AppendFormat("peopleCanMovePos:\n");
 		foreach (Creature creature in _creatureCanMovePos.Keys)
 		{
-			sb.AppendFormat("生物({0})的可移動位置:\n", creature);
-			for(int index = 0; index <_creatureCanMovePos[creature].Count; ++index)
-			{
-				sb.AppendFormat("	pos[{0}] = {1}\n", index, _creatureCanMovePos[creature][index].DataToString());
-			}
+            if (creature != Creature.None)
+            {
+                sb.AppendFormat("生物({0})的可移動位置:\n", creature);
+                for (int index = 0; index < _creatureCanMovePos[creature].Count; ++index)
+                {
+                    sb.AppendFormat("	pos[{0}] = {1}\n", index, _creatureCanMovePos[creature][index].DataToString());
+                }
+            }
 		}
 		foreach(Creature creature in _creatureCount.Keys)
 		{
@@ -542,6 +545,7 @@ public class GameLogic
 				}
 			}
 		}
-		return BattleResult.Draw;
+        // 尚未分出勝負
+		return BattleResult.None;
 	}
 }
