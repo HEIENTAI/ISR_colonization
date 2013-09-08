@@ -56,6 +56,11 @@ public class GameControl{
         }
     }
 
+    public GameLogic Logic
+    {
+        get{ return _logic;}
+    }
+
     // 玩家從 title 畫面, 觸發遊戲開始
     public void TriggerGameEnter()
     {
