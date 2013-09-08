@@ -159,8 +159,7 @@ public class GameControl{
                 }
 
 				UIManager.Instance.ScarabCount = _logic.ScarabCount;				UIManager.Instance.HumanCount = _logic.PeopleCount;                IVector2 vec = new IVector2();                vec.x = data.Column;                vec.y = data.Row;                ControlMessage controlMsg = _logic.CanControl(vec, NowHitter);                if (controlMsg != ControlMessage.OK)                {
-					UIManager.Instance.ShowCenterMsg("you can't do it !");
-                    //todo:                    //GameControl.Instance.DebugLog(" controlMsg " + controlMsg.ToString() );                    return;                }
+					UIManager.Instance.ShowCenterMsg("you can't do it !");                    return;                }
                 // todo: some click effect                // ready click 2                if (NowHitter == Creature.People)
                 {                    _currentPlayStatus = PlayStatus.RoundHumanReadyMove;                }                else if (NowHitter == Creature.Scarab)                {
                     _currentPlayStatus = PlayStatus.RoundScarabReadyMove;
@@ -170,18 +169,34 @@ public class GameControl{
                 DebugLog("PlayStatus: " + _currentPlayStatus.ToString());
                 break;
             case PlayStatus.RoundHumanReadyMove:
+            case PlayStatus.RoundScarabReadyMove:
                 bool legal = _logic.IsLegalMove(_currentChoosedBlock.Block.Pos, data.Block.Pos);
+                if (legal == false)
+                {
+                    UIManager.Instance.ShowCenterMsg("wrong move position !");
+                    return;
+                }
+
                 List<IVector2> infectPositions = new List<IVector2>();
                 IVector2 realEnd;
-                
                 MoveType moveType = _logic.Move(_currentChoosedBlock.Block.Pos, data.Block.Pos, out realEnd, out infectPositions);
+
+                DebugLog(" Move Start : " + _currentChoosedBlock.Block.Pos.x.ToString() + "," + _currentChoosedBlock.Block.Pos.y.ToString() +
+                         "    End: " + data.Block.Pos.x.ToString() + "," + data.Block.Pos.y.ToString() +
+                         "   Real End " + realEnd.x.ToString() + "," + realEnd.y.ToString() + "   MoveType : " + moveType.ToString());
 
                 if (moveType == MoveType.Move)
                 {
                     for (int i = 0; i < infectPositions.Count; i++)
                     {
                         MapBlock block = _logic.GetMapBlock(infectPositions[i]);
-                        MapGenerator.HumanInfectBlock(block);
+
+                        //人類
+                        if (_lastPlayStatus == PlayStatus.RoundHumanReadyMove)
+                            MapGenerator.HumanInfectBlock(block);
+                        //蟲類
+                        else
+                            MapGenerator.ScarabInfectBlock(block);
                     }
 
                     DebugLog(" infect nums. " + infectPositions.Count.ToString());
@@ -189,7 +204,12 @@ public class GameControl{
                 else if (moveType == MoveType.Clone)
                 {
                     MapBlock block = _logic.GetMapBlock(realEnd);
-                    MapGenerator.HumanInfectBlock(block);
+                    //人類
+                    if (_lastPlayStatus == PlayStatus.RoundHumanReadyMove)
+                        MapGenerator.HumanInfectBlock(block);
+                    //蟲類
+                    else
+                        MapGenerator.ScarabInfectBlock(block);
                     DebugLog("MoveType.Clone " + realEnd.ToString());
                 }
                 else
@@ -197,37 +217,22 @@ public class GameControl{
                     DebugLog("MoveType.None");
                 }
 
-                break;
-            case PlayStatus.RoundScarabReadyMove:
-                bool legal_2 = _logic.IsLegalMove(_currentChoosedBlock.Block.Pos, data.Block.Pos);
-                List<IVector2> infectPositions_2 = new List<IVector2>();
-                IVector2 realEnd_2;
-                MoveType moveType_2 = _logic.Move(_currentChoosedBlock.Block.Pos, data.Block.Pos, out realEnd_2, out infectPositions_2);
-
-                DebugLog(" Move Start : " + _currentChoosedBlock.Block.Pos.x.ToString() + "," + _currentChoosedBlock.Block.Pos.y.ToString() +
-                          "    End: " + data.Block.Pos.x.ToString() + "," + data.Block.Pos.y.ToString() +
-                        "   Real End " + realEnd_2.x.ToString() + "," + realEnd_2.y.ToString() + "   MoveType : " + moveType_2.ToString());
-
-                if (moveType_2 == MoveType.Move)
+                BattleResult res = BattleResult.None;
+                if (_currentPlayStatus == PlayStatus.RoundHumanReadyMove)
                 {
-                    for (int i = 0; i < infectPositions_2.Count; i++)
-                    {
-                        MapBlock block = _logic.GetMapBlock(infectPositions_2[i]);
-                        MapGenerator.ScarabInfectBlock(block);
-                    }
-
-                    DebugLog("MoveType.Move. infect nums. " + infectPositions_2.Count.ToString());
+                    _currentPlayStatus = PlayStatus.RoundScarabTurn; // 換蟲方
+                    res = _logic.DecideResult(Creature.Scarab);
                 }
-                else if (moveType_2 == MoveType.Clone)
+                else if (_currentPlayStatus == PlayStatus.RoundScarabReadyMove)
                 {
-                    MapBlock block = _logic.GetMapBlock(realEnd_2);
-                    MapGenerator.ScarabInfectBlock(block);
-
-                    DebugLog("MoveType.Clone " + realEnd_2.ToString());
+                    _currentPlayStatus = PlayStatus.RoundHumanTurn; // 換人方
+                    res = _logic.DecideResult(Creature.People);
                 }
-                else
+
+                if (res != BattleResult.None)
                 {
-                    DebugLog("MoveType.None");
+                    UIManager.Instance.ShowResult();
+                    _currentPlayStatus = PlayStatus.BattleResult; //本局結束
                 }
 
                 break;
