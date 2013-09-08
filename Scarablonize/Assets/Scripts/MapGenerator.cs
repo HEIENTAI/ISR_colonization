@@ -17,6 +17,8 @@ public class MapGenerator {
 	
 	private static GameObject root = null;
     private static GameObject levelGo = null;
+	
+	private static int extraLineCount = 2;
 
     private static List<List<MapBlock>> _generatedAllMapData = null;
 	public static void Generate(ushort LevelID)
@@ -74,11 +76,13 @@ public class MapGenerator {
 		}
 
         levelGo = GameObject.Find("CurrentLevel");
-
+		
+		GameLevel currentLevel = null;
+		
         if (levelGo == null)
         { 
             levelGo = new GameObject("CurrentLevel");
-            levelGo.AddComponent<GameLevel>();
+            currentLevel = levelGo.AddComponent<GameLevel>();
         }
 
 		TextAsset levelFile = Resources.Load(Const.DIR_LEVEL + fileName) as TextAsset;
@@ -91,10 +95,19 @@ public class MapGenerator {
             _generatedAllMapData = new List<List<MapBlock>>();
 
 			string[] lines = levelFile.text.Split(lineDelimiter, StringSplitOptions.None);
+			
+			string[] scarabInitPos = lines[lines.Length-extraLineCount].Split(tokenDelimiter, StringSplitOptions.None);
+			string[] humanInitPos = lines[lines.Length-extraLineCount+1].Split(tokenDelimiter, StringSplitOptions.None);
+			Vector2 scPos = new Vector2( float.Parse(scarabInitPos[0]),float.Parse(scarabInitPos[1]));
+			Vector2 humanPos = new Vector2(float.Parse(humanInitPos[0]),float.Parse(humanInitPos[1]));
+			
+			currentLevel.Scarab = generateScarab(scPos);
+			currentLevel.Human = generateHuman(humanPos);
+			
             BlockGraphicType graphicType;
             MapBlock block = null;
             List<MapBlock> oneBlockRow = null;
-			for(int i=2; i< lines.Length; i++)
+			for(int i=0; i< lines.Length-extraLineCount; i++)
 			{
                 oneBlockRow = new List<MapBlock>();
 				string[] blockToken = lines[i].Split(tokenDelimiter, StringSplitOptions.None);
@@ -160,6 +173,27 @@ public class MapGenerator {
             sprite.size = new Vector2(Tile_Width, Tile_Height);
 			newBlock.transform.parent = root.transform;
 		}
+	}
+	
+	private static GameObject generateHuman(Vector2 pos)
+	{
+		float xPos = offset_x/2f + Tile_Width*pos.x;
+		float yPos = offset_y/2f + Tile_Height*pos.y;
+		GameObject newGo = GameObject.Instantiate(Resources.Load("Prefab/Human")) as GameObject;
+		newGo.transform.position = new Vector3(xPos, yPos, -2);
+		
+		return newGo;
+	}
+	
+	private static GameObject generateScarab(Vector2 pos)
+	{
+		float xPos = offset_x/2f + Tile_Width*pos.x;
+		float yPos = offset_y/2f + Tile_Height*pos.y;
+		GameObject newGo = GameObject.Instantiate(Resources.Load("Prefab/Scarab")) as GameObject;
+		newGo.transform.position = new Vector3(xPos, yPos, -2);
+		
+		return newGo;
+		
 	}
 
     // map layout datas

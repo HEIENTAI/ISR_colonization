@@ -13,6 +13,7 @@ public class GameMain : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        _control.Update();
+        if (_control != null)
+            _control.Update();
 	}
 }
