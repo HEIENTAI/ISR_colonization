@@ -216,7 +216,6 @@ public class GameControl{
                     //移動場景物件
                     MapBlock destBlockMove = _logic.GetMapBlock(realEnd);
                     MapGenerator.CopyMoveUnit(_currentChoosedBlock.Block, destBlockMove);
-
                     for (int i = 0; i < infectPositions.Count; i++)
                     {
                         MapBlock block = _logic.GetMapBlock(infectPositions[i]);
@@ -292,7 +291,7 @@ public class GameControl{
 
                 if (res != BattleResult.None)
                 {
-                    UIManager.Instance.ShowResult();
+                    UIManager.Instance.ShowResult(res);
                     _currentPlayStatus = PlayStatus.BattleResult; //本局結束
                 }
 
