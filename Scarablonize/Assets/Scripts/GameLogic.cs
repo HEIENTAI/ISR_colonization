@@ -99,17 +99,29 @@ public class Map
 	
 	List<IVector2> peopleCanMovePos;
 	List<IVector2> scarabCanMovePos;
+	 // 生物數量
+	Dictionary<Creature, int> _creatureCount;
 	
-	private int _peopleCount;
+//	private int _peopleCount;
 	public int PeopleCount
 	{
-		get {return _peopleCount;}
+//		get {return _peopleCount;}
+		get 
+		{
+			if (_creatureCount == null || !_creatureCount.ContainsKey(Creature.People)) {return 0;}
+			return _creatureCount[Creature.People];
+		}
 	}
 	
-	private int _scarabCount;
+//	private int _scarabCount;
 	public int ScarabCount
 	{
-		get {return _scarabCount;}
+//		get {return _scarabCount;}
+		get
+		{
+			if (_creatureCount == null || !_creatureCount.ContainsKey(Creature.Scarab)) {return 0;}
+			return _creatureCount[Creature.Scarab];
+		}
 	}
 	
 	
@@ -119,8 +131,11 @@ public class Map
 		holePos = new Dictionary<IVector2, IVector2>();
 		peopleCanMovePos = new List<IVector2>();
 		scarabCanMovePos = new List<IVector2>();
-		_peopleCount = 0;
-		_scarabCount = 0;
+		_creatureCount = new Dictionary<Creature, int>();
+		_creatureCount.Add(Creature.People, 0);
+		_creatureCount.Add(Creature.Scarab, 0);
+//		_peopleCount = 0;
+//		_scarabCount = 0;
 	}
 	
 	~Map()
@@ -129,6 +144,7 @@ public class Map
 		holePos = null;
 		peopleCanMovePos = null;
 		scarabCanMovePos = null;
+		_creatureCount = null;
 	}
 	
 	public override string ToString ()
@@ -165,7 +181,11 @@ public class Map
 			sb.AppendFormat("scarabCanMovePos[{0}] = {1}\n", index, scarabCanMovePos);
 			++index;
 		}
-		sb.AppendFormat("_peopleCount = {0} _scarabCount = {1}", _peopleCount,_scarabCount);
+		foreach(Creature creature in _creatureCount.Keys)
+		{
+			sb.AppendFormat("生物({0})的數量 = {1}", creature, _creatureCount[creature]);  
+		}
+//		sb.AppendFormat("_peopleCount = {0} _scarabCount = {1}", _peopleCount,_scarabCount);
 		return sb.ToString();
 	}
 
@@ -179,7 +199,6 @@ public class Map
         if (CheckPosLegal(pos)) { return Creature.None; }
         return allMapBlock[pos.x][pos.y].LivingObject;
     }
-
 
 	public void Initialize(List<List<MapBlock>> allMapData, Dictionary<IVector2, IVector2> holeMapData)
 	{
@@ -363,25 +382,33 @@ public class Map
 	public void SetCreature(IVector2 pos, Creature creature)
 	{
 		if (!CheckPosLegal(pos)) {return;}
-		switch(allMapBlock[pos.x][pos.y].LivingObject)
+		if (_creatureCount.ContainsKey(allMapBlock[pos.x][pos.y].LivingObject))
 		{
-		case Creature.People:
-			--_peopleCount;
-			break;
-		case Creature.Scarab:
-			--_scarabCount;
-			break;
+			--_creatureCount[allMapBlock[pos.x][pos.y].LivingObject];
 		}
+//		switch(allMapBlock[pos.x][pos.y].LivingObject)
+//		{
+//		case Creature.People:
+//			--_peopleCount;
+//			break;
+//		case Creature.Scarab:
+//			--_scarabCount;
+//			break;
+//		}
 		allMapBlock[pos.x][pos.y].LivingObject = creature;
-		switch(allMapBlock[pos.x][pos.y].LivingObject)
+		if (_creatureCount.ContainsKey(allMapBlock[pos.x][pos.y].LivingObject))
 		{
-		case Creature.People:
-			++_peopleCount;
-			break;
-		case Creature.Scarab:
-			++_scarabCount;
-			break;
+			++_creatureCount[allMapBlock[pos.x][pos.y].LivingObject];
 		}
+//		switch(allMapBlock[pos.x][pos.y].LivingObject)
+//		{
+//		case Creature.People:
+//			++_peopleCount;
+//			break;
+//		case Creature.Scarab:
+//			++_scarabCount;
+//			break;
+//		}
 		RefreshCanWork(pos);
 	}
 	
@@ -415,7 +442,9 @@ public class GameLogic
 	{
 		get {return (map == null) ? 0 : map.PeopleCount;}
 	}
-	
+	/// <summary>
+	/// 取得甲蟲數
+	/// </summary>
 	public int ScarabCount
 	{
 		get {return (map == null) ? 0 : map.ScarabCount;}
