@@ -154,18 +154,20 @@ public class GameControl{
                     return;
                 }
 
-				UIManager.Instance.ScarabCount = _logic.ScarabCount;				UIManager.Instance.HumanCount = _logic.PeopleCount;                IVector2 vec = new IVector2();                vec.x = data.Column;                vec.y = data.Row;                ControlMessage controlMsg = _logic.CanControl(vec, NowHitter);                //if (controlMsg == ControlMessage.OK)                //{                //    UIManager.Instance.ShowCenterMsg(data.Block.MapBlockType.ToString());                //}                // click 2                //_logic.IsLegalMove();                //_logic.Move();                GameControl.Instance.DebugLog(" controlMsg " + controlMsg.ToString() );                //UIManager.Instance.ShowCenterMsg(data.Block.MapBlockType.ToString());                //RoundScarabReadyMove<<<<<<< .mine
-                vec.y = data.Row;
-                ControlMessage controlMsg = _logic.CanControl(vec, NowHitter);
-
-                //if (controlMsg == ControlMessage.OK)
-                //{
-                //    UIManager.Instance.ShowCenterMsg(data.Block.MapBlockType.ToString());
-                //}
-
-                // click 2
+				UIManager.Instance.ScarabCount = _logic.ScarabCount;				UIManager.Instance.HumanCount = _logic.PeopleCount;                IVector2 vec = new IVector2();                vec.x = data.Column;                vec.y = data.Row;                ControlMessage controlMsg = _logic.CanControl(vec, NowHitter);                if (controlMsg != ControlMessage.OK)                {
+                    //todo:                    //GameControl.Instance.DebugLog(" controlMsg " + controlMsg.ToString() );                    return;                }
+                // todo: some click effect                // ready click 2                if (NowHitter == Creature.People)
+                {                    _currentPlayStatus = PlayStatus.RoundHumanReadyMove;                }                else if (NowHitter == Creature.Scarab)                {
+                    _currentPlayStatus = PlayStatus.RoundScarabReadyMove;
+                }
 
                 break;
+            case PlayStatus.RoundHumanReadyMove:
+                _logic.IsLegalMove();
+                break;
+            case PlayStatus.RoundScarabReadyMove:
+                break;
+
             default:
                 DebugLog("Click Tile valid. " + _currentPlayStatus.ToString());
                 break;

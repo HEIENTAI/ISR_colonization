@@ -90,10 +90,10 @@ public class MapGenerator {
 			string[] humanInitPos = lines[lines.Length-extraLineCount+1].Split(tokenDelimiter, StringSplitOptions.None);
 			Vector2 scPos = new Vector2( float.Parse(scarabInitPos[0]),float.Parse(scarabInitPos[1]));
 			Vector2 humanPos = new Vector2(float.Parse(humanInitPos[0]),float.Parse(humanInitPos[1]));
-            MapBlockManager.Human =   generateHuman(humanPos);
-            MapBlockManager.Scarab = generateScarab(scPos);
+
 			BlockGraphicType graphicType;
             MapBlock block = null;
+            LivingObject living = null;
             List<MapBlock> oneBlockRow = null;
 			for(int i=0; i< lines.Length-extraLineCount; i++)
 			{
@@ -104,6 +104,7 @@ public class MapGenerator {
 				for(int j=0; j < blockToken.Length; j++)
 				{
                     graphicType = GetGraphicBlockType(Convert.ToUInt16(blockToken[j]));
+                    living = null;
 
                     block = new MapBlock(); // new block data sh20130908
                     block.Pos.x = j;
@@ -114,16 +115,17 @@ public class MapGenerator {
                     if ((block.Pos.x == scPos.x) && (block.Pos.y == scPos.y))
 					{
 						block.LivingObject = Creature.Scarab;
-						generateScarab(scPos);
+                        generateScarab(scPos, out living);
 					}
                     else if ((block.Pos.x == humanPos.x) && (block.Pos.y == humanPos.y))
 					{
                         block.LivingObject = Creature.People;
-						generateHuman(humanPos);
+                        generateHuman(humanPos, out living);
 					}
                     else
                         block.LivingObject = Creature.None;
 
+                    block.CreatureComponent = living;
                     oneBlockRow.Add(block);
 				}
                 _generatedAllMapData.Add(oneBlockRow);
@@ -177,24 +179,26 @@ public class MapGenerator {
         return newBlock;
 	}
 	
-	private static GameObject generateHuman(Vector2 pos)
+	private static GameObject generateHuman(Vector2 pos, out LivingObject living)
 	{
 		float xPos = offset_x/2f + Tile_Width*pos.x;
 		float yPos = offset_y/2f - Tile_Height*pos.y;
 		GameObject newGo = GameObject.Instantiate(Resources.Load("Prefab/Human")) as GameObject;
 		newGo.transform.position = new Vector3(xPos, yPos, -2);
         newGo.transform.localScale = new Vector3(Tile_Width, Tile_Height, 1);
+        living = newGo.AddComponent<LivingObject>();
 
 		return newGo;
 	}
-	
-	private static GameObject generateScarab(Vector2 pos)
+
+    private static GameObject generateScarab(Vector2 pos, out LivingObject living)
 	{
 		float xPos = offset_x/2f + Tile_Width*pos.x;
 		float yPos = offset_y/2f - Tile_Height*pos.y;
 		GameObject newGo = GameObject.Instantiate(Resources.Load("Prefab/Scarab")) as GameObject;
 		newGo.transform.position = new Vector3(xPos, yPos, -2);
         newGo.transform.localScale = new Vector3(Tile_Width, Tile_Height, 1);
+        living = newGo.AddComponent<LivingObject>();
 
 		return newGo;
 		

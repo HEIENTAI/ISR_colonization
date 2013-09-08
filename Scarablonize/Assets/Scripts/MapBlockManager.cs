@@ -11,7 +11,8 @@ public class MapBlock
     // Visual about
     private GameObject _blockObject = null;
     private MapBlockData _blockData = null;
-
+    private LivingObject _creatureComponent = null;
+	
     public MapBlock()
     {
         Pos = IVector2.zero;
@@ -45,6 +46,12 @@ public class MapBlock
             sprite.onInput = MapBlockManager.OnBlockInput;
             _blockData = BlockData; // data add component init
         }
+    }
+
+    public LivingObject CreatureComponent
+    {
+        get { return _creatureComponent;  }
+        set { _creatureComponent = value;  }
     }
 
     public OTSprite BlockOTSprite
