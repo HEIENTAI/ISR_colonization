@@ -1,11 +1,14 @@
 ISR_colonization
 ================
 
+
 Scarab Invasion (進擊的甲蟲)
 
 [Description]
 house, pyramid, water, hole
 Find out different functions of them by yourself!!
+
+Game web version link : https://googledrive.com/host/0B41otDeCMuf5TzhzSGV4Zmk0NEU/Play.html 
 
 [Credit]
 Indie Speed Run 2013 , yes.
