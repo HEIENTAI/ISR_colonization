@@ -3,6 +3,8 @@ ISR_colonization
 
 Indie Speed Run , yes.
 
+Game web version link : https://googledrive.com/host/0B41otDeCMuf5TzhzSGV4Zmk0NEU/Play.html
+
 
 Team : Hello, World.
  
