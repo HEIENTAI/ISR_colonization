@@ -1,6 +1,7 @@
 ISR_colonization
 ================
 
+SLG game based on Unity
 
 Scarab Invasion (進擊的甲蟲)
 
